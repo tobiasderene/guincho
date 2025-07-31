@@ -1,0 +1,251 @@
+.vehicle-filters-page {
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(to right, #475569, #1e293b);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-search-section {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.main-nav a,
+.login-nav a {
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.main-nav a:hover,
+.login-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-bar input {
+  width: 320px;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s;
+}
+
+.search-bar input:focus {
+  outline: none;
+  background: white;
+  box-shadow: 0 0 0 2px #38bdf8;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.filters-header h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.filters-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters-counter span {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+}
+
+.filters-counter button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.filters-box {
+  background: white;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filters-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.filter-item label {
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+
+.input-wrapper select {
+  appearance: none;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.search-button-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.search-button-container button {
+  background: linear-gradient(to right, #6c7174, #1e3038);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.search-button-container button:hover {
+  transform: scale(1.05);
+}
+
+.applied-filters-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 2rem;
+}
+
+.applied-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tag button {
+  background: none;
+  border: none;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.results-placeholder {
+  background: white;
+  padding: 3rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.results-placeholder h3 {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
