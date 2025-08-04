@@ -37,7 +37,7 @@ const Header = () => {
           </div>
 
           <nav className="nav-right">
-            <a href="iniciarsesión">Iniciar Sesión</a>
+            <a href="iniciarsesion">Iniciar Sesión</a>
           </nav>
         </div>
       </div>

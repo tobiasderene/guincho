@@ -133,6 +133,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
+  align-items: start; /* alinea todas las celdas arriba */
 }
 
 .filter-item label {
@@ -149,25 +150,30 @@
 .input-wrapper input,
 .input-wrapper select {
   width: 100%;
-  padding: 0.75rem 1rem;
-  padding-right: 2.5rem;
+  height: 42px; /* altura fija para ambos */
+  padding: 0 2.5rem 0 1rem; /* espacio para iconos */
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
+  font-size: 14px;
+  line-height: normal;
+  box-sizing: border-box;
 }
 
 .input-wrapper select {
-  appearance: none;
+  appearance: none; /* quita la flecha nativa */
+  padding-right: 2.5rem; /* espacio para ChevronDown */
 }
 
 .clear-btn {
   position: absolute;
-  right: 0.75rem;
+  right: 2rem; /* deja espacio para el dropdown */
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   color: #9ca3af;
   cursor: pointer;
+  z-index: 2;
 }
 
 .dropdown-icon {
