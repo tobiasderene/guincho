@@ -1,0 +1,39 @@
+/* UserIconWithName.css */
+
+.user-icon-name-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 9999px; /* full rounded */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transform: translateY(0);
+}
+
+.user-icon-name-container:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.user-icon-name-icon {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+  stroke-width: 2;
+  stroke: white;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.user-icon-name-text {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem; /* base text size */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  user-select: none;
+}

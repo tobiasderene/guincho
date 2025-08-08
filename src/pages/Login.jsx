@@ -5,16 +5,42 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (username && password) {
       setLoading(true);
-      setTimeout(() => {
-        alert(`¡Bienvenido, ${username}!`);
+      setError(null);
+
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            username,
+            password
+          }),
+          credentials: 'include' // si vas a usar cookies httpOnly
+        });
+
+        if (!response.ok) {
+          throw new Error('Credenciales incorrectas');
+        }
+
+        // Si usás cookie httpOnly no hay token acá
+        // const data = await response.json();
+        // localStorage.setItem('token', data.access_token);
+
+        window.location.href = '/inicio';
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
-      }, 1500);
+      }
     }
   };
 
@@ -61,6 +87,8 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {error && <p className="error-message">{error}</p>}
 
         <button type="submit" className="login-btn" disabled={loading}>
           {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}

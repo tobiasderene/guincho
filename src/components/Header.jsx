@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
-import '../styles/Header.css'; // Asegurate que esta ruta sea correcta
+import '../styles/Header.css';
+import UserIconSimple from '../components/UserIconSimple';
+import UserIconName from '../components/UserIconName';
+import { useAuth } from '../hooks/useAuth';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { user } = useAuth();
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Búsqueda:', searchQuery);
-    // Agregá tu lógica real de búsqueda acá
+    // Tu lógica acá
   };
 
   return (
@@ -27,7 +31,7 @@ const Header = () => {
               <Search className="search-icon" size={18} />
               <input
                 type="text"
-                placeholder="Buscar vehiculos..."
+                placeholder="Buscar vehículos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch(e)}
@@ -36,8 +40,16 @@ const Header = () => {
             </div>
           </div>
 
-          <nav className="nav-right">
-            <a href="iniciarsesion">Iniciar Sesión</a>
+          <nav className="nav-right" style={{ display: 'flex', alignItems: 'center' }}>
+            {user ? (
+              <a href="/perfil" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <UserIconName userName={user.nombre} />
+              </a>
+            ) : (
+              <a href="/iniciarsesion" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <UserIconSimple />
+              </a>
+            )}
           </nav>
         </div>
       </div>
