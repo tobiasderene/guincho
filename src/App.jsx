@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home.jsx";
 import Category from "./pages/Category.jsx";
@@ -10,9 +10,15 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/inicio" element={<Home />} />
+        {/* Ruta principal */}
+        <Route path="/" element={<Home />} />
+
+        {/* Rutas específicas */}
         <Route path="/categorias" element={<Category />} />
         <Route path="/iniciarsesion" element={<Login />} />
+
+        {/* Catch-all para redirección */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
