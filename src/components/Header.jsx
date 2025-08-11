@@ -22,7 +22,7 @@ const Header = () => {
 
         <div className="nav-section">
           <nav className="nav-left">
-            <a href="inicio">Inicio</a>
+            <a href="/">Inicio</a>
             <a href="categorias">Categorías</a>
           </nav>
 

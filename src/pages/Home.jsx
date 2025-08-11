@@ -12,11 +12,6 @@ const Home = () => {
     <div className="main-content" style={{ position: 'relative' }}>
       {/* Header superior con ícono de usuario */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
-        {user ? (
-          <UserIconName userName={user.nombre} />
-        ) : (
-          <UserIconSimple />
-        )}
       </div>
 
       {/* Hero principal */}

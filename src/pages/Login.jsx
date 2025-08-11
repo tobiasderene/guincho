@@ -6,6 +6,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ const Login = () => {
       setError(null);
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -24,18 +25,16 @@ const Login = () => {
             username,
             password
           }),
-          credentials: 'include' // si vas a usar cookies httpOnly
+          credentials: 'include'
         });
 
         if (!response.ok) {
           throw new Error('Credenciales incorrectas');
         }
 
-        // Si usás cookie httpOnly no hay token acá
-        // const data = await response.json();
-        // localStorage.setItem('token', data.access_token);
-
+        // Redirigimos si fue exitoso
         window.location.href = '/inicio';
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -44,14 +43,37 @@ const Login = () => {
     }
   };
 
-  const handleForgotPassword = (e) => {
-    e.preventDefault();
-    alert('Función de recuperación de contraseña - Aquí implementarías la lógica correspondiente');
+  const handleCheckLoginStatus = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/me`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('No autenticado');
+      }
+
+      const data = await response.json();
+      setLoggedInUser(data.usuario.nombre);
+      alert(`Estás autenticado como: ${data.usuario.nombre}`);
+    } catch (err) {
+      alert('No estás logueado o hubo un error: ' + err.message);
+      setLoggedInUser(null);
+    }
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    alert('Función de registro - Aquí redirigirías a la página de registro');
+  const handleLogout = async () => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/v1/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      setLoggedInUser(null);
+      alert('Sesión cerrada');
+    } catch (err) {
+      alert('Error al cerrar sesión: ' + err.message);
+    }
   };
 
   return (
@@ -95,13 +117,31 @@ const Login = () => {
         </button>
 
         <div className="form-links">
-          <a href="/" onClick={handleForgotPassword}>¿Olvidaste tu contraseña?</a>
+          <a href="/" onClick={(e) => {
+            e.preventDefault();
+            alert('Función de recuperación de contraseña pendiente.');
+          }}>¿Olvidaste tu contraseña?</a>
         </div>
       </form>
 
       <div className="register-section">
         <p>¿No tienes una cuenta?</p>
-        <a href="/" className="register-btn" onClick={handleRegister}>Registrarse</a>
+        <a href="/" className="register-btn" onClick={(e) => {
+          e.preventDefault();
+          alert('Función de registro pendiente.');
+        }}>Registrarse</a>
+      </div>
+
+      <div style={{ marginTop: '2rem' }}>
+        <button onClick={handleCheckLoginStatus} className="login-btn" style={{ marginRight: '1rem' }}>
+          Verificar si estoy logueado
+        </button>
+
+        <button onClick={handleLogout} className="login-btn logout">
+          Cerrar sesión
+        </button>
+
+        {loggedInUser && <p style={{ marginTop: '1rem' }}>Sesión activa como: <strong>{loggedInUser}</strong></p>}
       </div>
     </div>
   );

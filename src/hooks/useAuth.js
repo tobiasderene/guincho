@@ -4,17 +4,24 @@ export const useAuth = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Por ahora simple: si hay token, está logueado
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Si querés, podés decodificar el token para sacar el nombre
-      // Pero si no tenés librería, vamos a hacer algo simple por ahora
-      // O asumir que el nombre lo guardás aparte (por ejemplo localStorage)
-      const nombreUsuario = localStorage.getItem('nombre_usuario') || 'Usuario';
-      setUser({ nombre: nombreUsuario });
-    } else {
-      setUser(null);
-    }
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/auth/me`, {
+          credentials: 'include' 
+        });
+
+        if (!res.ok) throw new Error('No autorizado');
+
+        const data = await res.json();
+        setUser(data.usuario); // Esto viene del backend
+
+      } catch {
+        setUser(null);
+
+      }
+    };
+
+    fetchUser();
   }, []);
 
   return { user };
