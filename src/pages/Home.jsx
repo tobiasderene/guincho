@@ -1,7 +1,5 @@
 import React from 'react';
 import '../styles/Home.css';
-import UserIconSimple from '../components/UserIconSimple';
-import UserIconName from '../components/UserIconName';
 import BotonPlus from '../components/BotonPlus';
 import { useAuth } from '../hooks/useAuth';
 

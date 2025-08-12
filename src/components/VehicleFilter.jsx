@@ -4,7 +4,7 @@ import { Search, Filter, X, ChevronDown } from 'lucide-react';
 import '../styles/Category.css';
 
 const VehicleFilters = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery] = useState('');
   const [filters, setFilters] = useState({
     modelo: '',
     categoria: '',
