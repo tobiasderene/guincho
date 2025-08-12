@@ -12,13 +12,11 @@ function App() {
       <Routes>
         {/* Ruta principal */}
         <Route path="/" element={<Home />} />
-
         {/* Rutas específicas */}
+        <Route path="/inicio" element={<Home />} />
         <Route path="/categorias" element={<Category />} />
         <Route path="/iniciarsesion" element={<Login />} />
 
-        {/* Catch-all para redirección */}
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
