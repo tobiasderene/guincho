@@ -10,8 +10,6 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        {/* Ruta principal */}
-        <Route path="/" element={<Home />} />
         {/* Rutas específicas */}
         <Route path="/inicio" element={<Home />} />
         <Route path="/categorias" element={<Category />} />
