@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Routes>
         {/* Rutas específicas */}
-        <Route path="/inicio" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/categorias" element={<Category />} />
         <Route path="/iniciarsesion" element={<Login />} />
 

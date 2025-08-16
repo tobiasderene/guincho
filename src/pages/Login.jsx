@@ -33,7 +33,7 @@ const Login = () => {
         }
 
         // Redirigimos si fue exitoso
-        window.location.href = '/inicio';
+        window.location.href = '/';
 
       } catch (err) {
         setError(err.message);
