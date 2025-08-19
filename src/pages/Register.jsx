@@ -109,41 +109,53 @@ const Register = () => {
     }
   };
 
-  // Manejar envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const { username, password, confirmPassword } = formData;
-    
+
     // Validaciones finales
     let isValid = true;
-    
+
     if (username.trim().length < 3) {
       validateUsername(username);
       isValid = false;
     }
-    
+
     if (!validatePassword(password)) {
       isValid = false;
     }
-    
+
     if (!validateConfirmPassword(password, confirmPassword)) {
       isValid = false;
     }
-    
-    if (!isValid) {
-      return;
-    }
-    
-    // Simular proceso de registro
+
+    if (!isValid) return;
+
     setIsLoading(true);
-    
+
     try {
-      // Aquí harías la llamada a tu API
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      alert(`¡Cuenta creada exitosamente!\nBienvenido, ${username.trim()}!`);
-      
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/usuario/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username.trim(),
+          password
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error en la respuesta del backend:', errorData);
+        throw new Error(errorData.message || 'Error desconocido');
+      }
+
+      const data = await response.json();
+
+      alert(`¡Cuenta creada exitosamente!\nBienvenido, ${data.username || username.trim()}!`);
+
       // Resetear formulario
       setFormData({
         username: '',
@@ -158,9 +170,9 @@ const Register = () => {
         lowercase: false,
         number: false
       });
-      
-      console.log('Usuario registrado:', { username: username.trim(), password });
-      
+
+      console.log('Usuario registrado:', data);
+
     } catch (error) {
       console.error('Error al registrar usuario:', error);
       alert('Error al crear la cuenta. Por favor, intenta nuevamente.');
@@ -168,6 +180,7 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
 
   // Manejar botón de retroceso
   const handleBack = () => {
