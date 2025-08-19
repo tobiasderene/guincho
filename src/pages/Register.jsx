@@ -147,10 +147,11 @@ const Register = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error en la respuesta del backend:', errorData);
-        throw new Error(errorData.message || 'Error desconocido');
+        const errorText = await response.text();
+        console.error('Respuesta cruda del backend:', errorText);
+        throw new Error('El backend respondió con un error. Ver consola para más detalles.');
       }
+
 
       const data = await response.json();
 
