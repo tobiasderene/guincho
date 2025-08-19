@@ -1,4 +1,5 @@
-/* Register.css */
+/* register.css - Estilos para pantalla de registro */
+
 * {
     margin: 0;
     padding: 0;
@@ -237,12 +238,13 @@ body {
     transform: translateY(-1px);
 }
 
+/* Responsive Design */
 @media (max-width: 480px) {
     .register-container {
         padding: 30px 20px;
         margin: 10px;
     }
-
+    
     .header h1 {
         font-size: 1.8rem;
     }

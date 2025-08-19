@@ -1,4 +1,3 @@
-// Register.jsx
 import React, { useState } from 'react';
 import '../styles/Register.css';
 
@@ -10,75 +9,220 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState({});
+  const [successMessages, setSuccessMessages] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = e => {
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false
+  });
+
+  // Manejar cambios en los inputs
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Validación específica por campo
+    if (name === 'username') {
+      validateUsername(value);
+    } else if (name === 'password') {
+      validatePassword(value);
+      // Revalidar confirmación si ya existe
+      if (formData.confirmPassword) {
+        validateConfirmPassword(value, formData.confirmPassword);
+      }
+    } else if (name === 'confirmPassword') {
+      validateConfirmPassword(formData.password, value);
+    }
   };
 
-  const validatePassword = password => {
-    return {
+  // Validar nombre de usuario
+  const validateUsername = (username) => {
+    const trimmedUsername = username.trim();
+    
+    if (trimmedUsername.length < 3) {
+      setErrors(prev => ({
+        ...prev,
+        username: 'El nombre de usuario debe tener al menos 3 caracteres'
+      }));
+      setSuccessMessages(prev => ({ ...prev, username: false }));
+    } else if (!/^[a-zA-Z0-9_]+$/.test(trimmedUsername)) {
+      setErrors(prev => ({
+        ...prev,
+        username: 'Solo se permiten letras, números y guiones bajos'
+      }));
+      setSuccessMessages(prev => ({ ...prev, username: false }));
+    } else {
+      setErrors(prev => ({ ...prev, username: '' }));
+      setSuccessMessages(prev => ({ ...prev, username: true }));
+    }
+  };
+
+  // Validar contraseña
+  const validatePassword = (password) => {
+    const requirements = {
       length: password.length >= 8,
       uppercase: /[A-Z]/.test(password),
       lowercase: /[a-z]/.test(password),
       number: /\d/.test(password)
     };
-  };
 
-  const isPasswordValid = pass => {
-    const checks = validatePassword(pass);
-    return Object.values(checks).every(Boolean);
-  };
+    setPasswordRequirements(requirements);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const { username, password, confirmPassword } = formData;
-    let valid = true;
-    const newErrors = {};
-    const newSuccess = {};
-
-    if (username.length < 3) {
-      newErrors.username = 'El nombre de usuario debe tener al menos 3 caracteres';
-      valid = false;
-    } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      newErrors.username = 'Solo se permiten letras, números y guiones bajos';
-      valid = false;
+    const allValid = Object.values(requirements).every(req => req);
+    
+    if (password.length > 0 && !allValid) {
+      setErrors(prev => ({ ...prev, password: 'invalid' }));
+    } else if (allValid) {
+      setErrors(prev => ({ ...prev, password: '' }));
     } else {
-      newSuccess.username = true;
+      setErrors(prev => ({ ...prev, password: '' }));
     }
 
-    if (!isPasswordValid(password)) {
-      newErrors.password = 'La contraseña no cumple los requisitos';
-      valid = false;
+    return allValid;
+  };
+
+  // Validar confirmación de contraseña
+  const validateConfirmPassword = (password, confirmPassword) => {
+    if (confirmPassword.length === 0) {
+      setErrors(prev => ({ ...prev, confirmPassword: '' }));
+      setSuccessMessages(prev => ({ ...prev, confirmPassword: false }));
+      return false;
     }
 
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden';
-      valid = false;
-    } else if (password && confirmPassword) {
-      newSuccess.confirmPassword = true;
-    }
-
-    setErrors(newErrors);
-    setSuccess(newSuccess);
-
-    if (valid) {
-      alert(`¡Cuenta creada exitosamente!\nBienvenido, ${username}!`);
-      console.log('Usuario registrado:', { username, password });
-      // Reset form
-      setFormData({ username: '', password: '', confirmPassword: '' });
-      setSuccess({});
+      setErrors(prev => ({
+        ...prev,
+        confirmPassword: 'Las contraseñas no coinciden'
+      }));
+      setSuccessMessages(prev => ({ ...prev, confirmPassword: false }));
+      return false;
+    } else {
+      setErrors(prev => ({ ...prev, confirmPassword: '' }));
+      setSuccessMessages(prev => ({ ...prev, confirmPassword: true }));
+      return true;
     }
   };
 
-  const reqs = validatePassword(formData.password);
+  // Manejar envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const { username, password, confirmPassword } = formData;
+    
+    // Validaciones finales
+    let isValid = true;
+    
+    if (username.trim().length < 3) {
+      validateUsername(username);
+      isValid = false;
+    }
+    
+    if (!validatePassword(password)) {
+      isValid = false;
+    }
+    
+    if (!validateConfirmPassword(password, confirmPassword)) {
+      isValid = false;
+    }
+    
+    if (!isValid) {
+      return;
+    }
+    
+    // Simular proceso de registro
+    setIsLoading(true);
+    
+    try {
+      // Aquí harías la llamada a tu API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      alert(`¡Cuenta creada exitosamente!\nBienvenido, ${username.trim()}!`);
+      
+      // Resetear formulario
+      setFormData({
+        username: '',
+        password: '',
+        confirmPassword: ''
+      });
+      setErrors({});
+      setSuccessMessages({});
+      setPasswordRequirements({
+        length: false,
+        uppercase: false,
+        lowercase: false,
+        number: false
+      });
+      
+      console.log('Usuario registrado:', { username: username.trim(), password });
+      
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      alert('Error al crear la cuenta. Por favor, intenta nuevamente.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Manejar botón de retroceso
+  const handleBack = () => {
+    const hasChanges = formData.username || formData.password || formData.confirmPassword;
+    
+    if (hasChanges) {
+      if (window.confirm('¿Estás seguro de que quieres salir? Se perderán todos los cambios.')) {
+        window.history.back();
+      }
+    } else {
+      window.history.back();
+    }
+  };
+
+  // Manejar enlace a login
+  const handleLoginLink = (e) => {
+    e.preventDefault();
+    alert('Función de inicio de sesión - Aquí redirigirías a la página de login');
+    // window.location.href = '/login'; // Ejemplo de redirección
+  };
+
+  // Obtener clase CSS para form-group
+  const getFormGroupClass = (fieldName) => {
+    let baseClass = 'form-group';
+    if (errors[fieldName] && errors[fieldName] !== '') {
+      baseClass += ' error';
+    } else if (successMessages[fieldName]) {
+      baseClass += ' success';
+    }
+    return baseClass;
+  };
+
+  // Renderizar requisito de contraseña
+  const renderRequirement = (isValid, text) => {
+    const className = `requirement ${isValid ? 'valid' : 'invalid'}`;
+    const icon = isValid ? '✓' : '○';
+    
+    return (
+      <div className={className}>
+        <span className="requirement-icon">{icon}</span>
+        {text}
+      </div>
+    );
+  };
 
   return (
     <div className="register-container">
       <div className="header">
-        <button className="back-arrow" onClick={() => window.history.back()}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <button 
+          className="back-arrow" 
+          onClick={handleBack}
+          title="Volver atrás"
+          type="button"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
@@ -87,47 +231,90 @@ const Register = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className={`form-group ${errors.username ? 'error' : success.username ? 'success' : ''}`}>
+        <div className={getFormGroupClass('username')}>
           <label htmlFor="username">Nombre de usuario *</label>
-          <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} />
-          {errors.username && <div className="error-message">{errors.username}</div>}
-          {success.username && <div className="success-message">✓ Nombre de usuario disponible</div>}
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Ingresa tu nombre de usuario"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.username && (
+            <div className="error-message" style={{ display: 'block' }}>
+              {errors.username}
+            </div>
+          )}
+          {successMessages.username && (
+            <div className="success-message" style={{ display: 'block' }}>
+              ✓ Nombre de usuario disponible
+            </div>
+          )}
         </div>
 
-        <div className={`form-group ${errors.password ? 'error' : isPasswordValid(formData.password) ? 'success' : ''}`}>
+        <div className={getFormGroupClass('password')}>
           <label htmlFor="password">Contraseña *</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
-          {errors.password && <div className="error-message">{errors.password}</div>}
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Crea una contraseña segura"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.password && (
+            <div className="error-message" style={{ display: 'block' }}>
+              {errors.password}
+            </div>
+          )}
+          
           <div className="password-requirements">
             <h4>Requisitos de la contraseña:</h4>
-            <div className={`requirement ${reqs.length ? 'valid' : 'invalid'}`}>
-              <span className="requirement-icon">{reqs.length ? '✓' : '○'}</span> Al menos 8 caracteres
-            </div>
-            <div className={`requirement ${reqs.uppercase ? 'valid' : 'invalid'}`}>
-              <span className="requirement-icon">{reqs.uppercase ? '✓' : '○'}</span> Una letra mayúscula
-            </div>
-            <div className={`requirement ${reqs.lowercase ? 'valid' : 'invalid'}`}>
-              <span className="requirement-icon">{reqs.lowercase ? '✓' : '○'}</span> Una letra minúscula
-            </div>
-            <div className={`requirement ${reqs.number ? 'valid' : 'invalid'}`}>
-              <span className="requirement-icon">{reqs.number ? '✓' : '○'}</span> Un número
-            </div>
+            {renderRequirement(passwordRequirements.length, 'Al menos 8 caracteres')}
+            {renderRequirement(passwordRequirements.uppercase, 'Una letra mayúscula')}
+            {renderRequirement(passwordRequirements.lowercase, 'Una letra minúscula')}
+            {renderRequirement(passwordRequirements.number, 'Un número')}
           </div>
         </div>
 
-        <div className={`form-group ${errors.confirmPassword ? 'error' : success.confirmPassword ? 'success' : ''}`}>
+        <div className={getFormGroupClass('confirmPassword')}>
           <label htmlFor="confirmPassword">Confirmar contraseña *</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-          {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
-          {success.confirmPassword && <div className="success-message">✓ Las contraseñas coinciden</div>}
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Repite tu contraseña"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.confirmPassword && (
+            <div className="error-message" style={{ display: 'block' }}>
+              {errors.confirmPassword}
+            </div>
+          )}
+          {successMessages.confirmPassword && (
+            <div className="success-message" style={{ display: 'block' }}>
+              ✓ Las contraseñas coinciden
+            </div>
+          )}
         </div>
 
-        <button type="submit" className="register-btn">Crear Cuenta</button>
+        <button 
+          type="submit" 
+          className="register-btn"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
+        </button>
       </form>
 
       <div className="login-section">
         <p>¿Ya tienes una cuenta?</p>
-        <a href="#" className="login-btn" onClick={(e) => { e.preventDefault(); alert("Función de login aún no implementada"); }}>
+        <a href="#" className="login-btn" onClick={handleLoginLink}>
           Iniciar Sesión
         </a>
       </div>
