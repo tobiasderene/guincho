@@ -24,17 +24,21 @@ const Login = () => {
           body: new URLSearchParams({
             username,
             password
-          }),
-          credentials: 'include'
+          })
         });
 
         if (!response.ok) {
           throw new Error('Credenciales incorrectas');
         }
 
-        // Redirigimos si fue exitoso
-        window.location.href = '/';
+        const data = await response.json();
+        const token = data.access_token;
 
+        // Guardar token JWT en localStorage
+        localStorage.setItem('access_token', token);
+
+        // Redirigir al inicio o a donde quieras
+        window.location.href = '/';
       } catch (err) {
         setError(err.message);
       } finally {
@@ -44,10 +48,19 @@ const Login = () => {
   };
 
   const handleCheckLoginStatus = async () => {
+    const token = localStorage.getItem('access_token');
+
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/me`, {
         method: 'GET',
-        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       if (!response.ok) {
@@ -63,17 +76,10 @@ const Login = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/v1/logout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      setLoggedInUser(null);
-      alert('Sesión cerrada');
-    } catch (err) {
-      alert('Error al cerrar sesión: ' + err.message);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    setLoggedInUser(null);
+    alert('Sesión cerrada');
   };
 
   return (
