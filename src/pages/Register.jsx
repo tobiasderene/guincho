@@ -214,13 +214,6 @@ const Register = () => {
   return (
     <div className="login-container">
       <div className="logo">
-        <button 
-          className="back-arrow" 
-          onClick={handleBack}
-          title="Volver atrás"
-          type="button"
-        >
-        </button>
         <h1>Crear Cuenta</h1>
         <p>Únete a nuestra comunidad</p>
       </div>
