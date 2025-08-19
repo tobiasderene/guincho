@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Home.css';
+import Header from "./components/Header";
 import BotonPlus from '../components/BotonPlus';
 import { useAuth } from '../hooks/useAuth';
 
@@ -8,7 +9,10 @@ const Home = () => {
 
   return (
     <div className="main-content" style={{ position: 'relative' }}>
+      
+      <Header />
       {/* Header superior con ícono de usuario */}
+
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
       </div>
 

@@ -132,11 +132,11 @@ const Login = () => {
 
       <div className="register-section">
         <p>¿No tienes una cuenta?</p>
-        <a href="/registrarse" className="register-btn" onClick={(e) => {
-          e.preventDefault();
-          alert('Función de registro pendiente.');
-        }}>Registrarse</a>
+        <a href="/registrarse" className="register-btn">
+          Registrarse
+        </a>
       </div>
+
 
     </div>
   );
