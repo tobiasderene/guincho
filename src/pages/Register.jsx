@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Register.css';
 
 function Registro() {
@@ -23,13 +24,12 @@ function Registro() {
     const { name, value } = e.target;
 
     if (name === 'password') {
-      const requirements = {
+      setPasswordRequirements({
         length: value.length >= 8,
         uppercase: /[A-Z]/.test(value),
         lowercase: /[a-z]/.test(value),
         number: /[0-9]/.test(value)
-      };
-      setPasswordRequirements(requirements);
+      });
     }
 
     setFormData((prev) => ({
@@ -61,7 +61,7 @@ function Registro() {
     if (Object.keys(newErrors).length > 0) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/usuario`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/usuario`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -150,12 +150,12 @@ function Registro() {
           {successMessages.confirmPassword && <p className="success">{successMessages.confirmPassword}</p>}
         </div>
 
-        <button type="submit">Crear cuenta</button>
+        <button type="submit" className="register-btn">Crear cuenta</button>
       </form>
 
       <div className="register-section">
         <p>¿Ya tienes una cuenta?</p>
-        <a href="/iniciarsesion" className="register-btn">Iniciar sesión</a>
+        <Link to="/iniciarsesion" className="register-btn">Iniciar sesión</Link>
       </div>
     </div>
   );
