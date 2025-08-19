@@ -132,23 +132,12 @@ const Login = () => {
 
       <div className="register-section">
         <p>¿No tienes una cuenta?</p>
-        <a href="/" className="register-btn" onClick={(e) => {
+        <a href="/registrarse" className="register-btn" onClick={(e) => {
           e.preventDefault();
           alert('Función de registro pendiente.');
         }}>Registrarse</a>
       </div>
 
-      <div style={{ marginTop: '2rem' }}>
-        <button onClick={handleCheckLoginStatus} className="login-btn" style={{ marginRight: '1rem' }}>
-          Verificar si estoy logueado
-        </button>
-
-        <button onClick={handleLogout} className="login-btn logout">
-          Cerrar sesión
-        </button>
-
-        {loggedInUser && <p style={{ marginTop: '1rem' }}>Sesión activa como: <strong>{loggedInUser}</strong></p>}
-      </div>
     </div>
   );
 };
