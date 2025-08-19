@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Home.css';
-import Header from "./components/Header";
+import Header from "../components/Header";
 import BotonPlus from '../components/BotonPlus';
 import { useAuth } from '../hooks/useAuth';
 
