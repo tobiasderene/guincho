@@ -220,9 +220,6 @@ const Register = () => {
           title="Volver atrás"
           type="button"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
         </button>
         <h1>Crear Cuenta</h1>
         <p>Únete a nuestra comunidad</p>
@@ -303,7 +300,7 @@ const Register = () => {
 
         <button 
           type="submit" 
-          className="register-btn"
+          className="login-btn"
           disabled={isLoading}
         >
           {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
@@ -312,7 +309,7 @@ const Register = () => {
 
       <div className="login-section">
         <p>¿Ya tienes una cuenta?</p>
-        <a href="/iniciarsesion" className="login-btn" onClick={handleLoginLink}>
+        <a href="/iniciarsesion" className="register-btn" onClick={handleLoginLink}>
           Iniciar Sesión
         </a>
       </div>
