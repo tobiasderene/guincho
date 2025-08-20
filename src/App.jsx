@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home.jsx";
 import Category from "./pages/Category.jsx";
 import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
+import Register from "./pages/SignUp.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import './styles/styles.css';
 

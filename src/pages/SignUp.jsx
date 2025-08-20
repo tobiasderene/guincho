@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
+import BackButton from '../components/BackButton';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -227,6 +228,7 @@ const Register = () => {
 
   return (
     <div className="login-container">
+      <BackButton/>
       <div className="logo">
         <h1>Crear Cuenta</h1>
         <p>Únete a nuestra comunidad</p>
