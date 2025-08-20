@@ -1,6 +1,6 @@
 import '../styles/Home.css';
 import BotonPlus from '../components/BotonPlus';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
   const { user } = useAuth();

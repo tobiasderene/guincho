@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 import '../styles/Header.css';
 import UserIconSimple from '../components/UserIconSimple';
 import UserIconName from '../components/UserIconName';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
