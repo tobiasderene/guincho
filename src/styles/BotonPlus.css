@@ -1,8 +1,8 @@
 /* CircularPlusButton.css */
 .btn-wrapper {
   position: fixed;
-  bottom: 5rem; /* distancia del borde inferior */
-  right: 5rem;  /* distancia del borde derecho */
+  bottom: 2%; /* distancia del borde inferior */
+  right: 2%;  /* distancia del borde derecho */
   z-index: 1000;  /* para que quede por encima */
   display: flex;
   align-items: center;
