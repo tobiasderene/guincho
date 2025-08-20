@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx";
 import Category from "./pages/Category.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
 import './styles/styles.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/categorias" element={<Category />} />
           <Route path="/iniciarsesion" element={<Login />} />
           <Route path="/registrarse" element={<Register />} />
+          <Route path="/crearpost" element={<CreatePost/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

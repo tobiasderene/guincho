@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles/CreatePost.css';
+import '../styles/Login.css';
 
 export default function CreatePost() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -53,8 +53,8 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="create-post-container">
-      <div className="header">
+    <div className="login-container">
+      <div className="logo">
         <h1>Crear Publicación</h1>
         <p>Comparte tu contenido con la comunidad</p>
       </div>
@@ -122,13 +122,12 @@ export default function CreatePost() {
           <label>Enlace opcional</label>
           <input type="url" value={link} onChange={e => setLink(e.target.value)} placeholder="https://ejemplo.com (opcional)" />
         </div>
+        
+        <div className="button-group">
+          <button type="submit" className="publish-btn" disabled={publishing}>{publishing ? 'Publicando...' : 'Publicar'}</button>
+          <button type="button" className="cancel-btn" onClick={resetForm}>Cancelar</button>
+        </div>
 
-        <button type="submit" className="publish-btn" disabled={publishing}>
-          {publishing ? 'Publicando...' : 'Publicar'}
-        </button>
-        <button type="button" className="cancel-btn" onClick={resetForm}>
-          Cancelar
-        </button>
       </form>
     </div>
   );

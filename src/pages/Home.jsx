@@ -42,7 +42,9 @@ const Home = () => {
           left: '2rem',
           zIndex: 1000,
         }}>
-          <BotonPlus onClick={() => alert('Aquí tu lógica para crear publicación')} />
+          <a href="/crearpost">
+            <BotonPlus />
+          </a>
         </div>
       )}
     </div>
