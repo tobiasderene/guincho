@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
+import BackButton from '../components/BackButton';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -7,7 +8,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -84,12 +85,14 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <BackButton />
       <div className="logo">
         <h1>Bienvenido</h1>
         <p>Inicia sesión en tu cuenta</p>
       </div>
 
       <form onSubmit={handleLogin}>
+        
         <div className="form-group">
           <label htmlFor="username">Usuario</label>
           <input

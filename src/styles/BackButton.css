@@ -1,0 +1,15 @@
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: inherit;
+  padding: 0.5rem;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
