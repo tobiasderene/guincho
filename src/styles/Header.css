@@ -103,7 +103,7 @@
     .nav-section {
         flex-direction: column;
         gap: 1rem;
-        align-items: center; /* Mantiene centrado vertical en móvil */
+        align-items: left; /* Mantiene centrado vertical en móvil */
     }
     
     .search-input {
@@ -120,7 +120,7 @@
     .header-content {
         flex-direction: column;
         gap: 1rem;
-        align-items: center; /* Centra todo verticalmente en móvil */
+        align-items: left; /* Centra todo verticalmente en móvil */
     }
     
     .nav-section {
