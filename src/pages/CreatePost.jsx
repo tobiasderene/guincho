@@ -70,7 +70,7 @@ export default function CreatePost() {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload/signed-url?filename=${encodeURIComponent(file.name)}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       });
 
