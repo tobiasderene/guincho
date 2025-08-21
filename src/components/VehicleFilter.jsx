@@ -15,9 +15,8 @@ const VehicleFilters = () => {
   const [activeFilters, setActiveFilters] = useState(0);
 
   const filterOptions = {
-    categoria: ['Sedán', 'SUV', 'Hatchback', 'Pickup', 'Coupé', 'Convertible', 'Camioneta'],
     marca: ['Toyota', 'Ford', 'Chevrolet', 'Honda', 'Nissan', 'Hyundai', 'Volkswagen', 'BMW', 'Mercedes-Benz'],
-    nacionalidad: ['Japonés', 'Americano', 'Coreano', 'Alemán', 'Francés', 'Italiano', 'Chino'],
+    categoria: ['Sedán', 'SUV', 'Hatchback', 'Pickup', 'Coupé', 'Convertible', 'Camioneta'],
     año: ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015']
   };
 

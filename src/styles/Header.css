@@ -1,5 +1,5 @@
 .header {
-    background: linear-gradient(135deg, #6c7174, #1e3038);
+    background: #7BB5DC !important;
     padding: 1rem 0;
     box-shadow: 0 4px 12px rgba(25, 55, 68, 0.3);
     position: sticky;
@@ -12,10 +12,10 @@
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
-    align-items: center; /* Centra verticalmente todos los elementos */
+    align-items: center; 
     justify-content: space-between;
     gap: 2rem;
-    min-height: 60px; /* Altura mínima para garantizar centrado */
+    min-height: 60px; 
 }
 
 .logo {

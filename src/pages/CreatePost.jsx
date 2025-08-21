@@ -3,6 +3,7 @@ import '../styles/Login.css';
 
 export default function CreatePost() {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [title, setTitle] = useState('');
   const [shortDesc, setShortDesc] = useState('');
   const [longDesc, setLongDesc] = useState('');
   const [link, setLink] = useState('');
@@ -28,9 +29,11 @@ export default function CreatePost() {
 
   const resetForm = () => {
     setSelectedFiles([]);
+    setTitle('');
     setShortDesc('');
     setLongDesc('');
     setLink('');
+
   };
 
   // --- Función para subir imagenes con signed URL ---
@@ -156,6 +159,16 @@ export default function CreatePost() {
               </div>
             </div>
           )}
+        </div>
+
+        <div className='form-group'> 
+          <label>Titulo *</label>
+          <textarea
+            value={title}
+            onChange={e => setTitle(e.target.value)}>
+            maxLength={50}
+            required
+          </textarea>
         </div>
 
         <div className="form-group">

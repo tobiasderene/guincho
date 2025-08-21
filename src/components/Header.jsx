@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <div className="logo">Guincho</div>
+        <div className="logo">Guincho Garage</div>
 
         <div className="nav-section">
           <nav className="nav-left">
