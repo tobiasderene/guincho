@@ -8,6 +8,7 @@ export default function CreatePost() {
   const [link, setLink] = useState('');
   const [publishing, setPublishing] = useState(false);
 
+  // --- Manejo de archivos ---
   const handleFiles = files => {
     const valid = files.filter(file => file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024);
     setSelectedFiles(prev => [...prev, ...valid]);
@@ -32,56 +33,91 @@ export default function CreatePost() {
     setLink('');
   };
 
-  const handleSubmit = async e => {
-  e.preventDefault();
-  if (!shortDesc.trim() || !longDesc.trim()) {
-    alert('Por favor completa todos los campos requeridos');
-    return;
+  // --- Función para subir imagenes con signed URL ---
+  async function uploadImage(file) {
+    try {
+      // 1️⃣ Pedir signed URL al backend
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/uploads/signed-url?filename=${encodeURIComponent(file.name)}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // si tu endpoint exige auth
+        },
+      });
+
+      if (!res.ok) throw new Error("No se pudo obtener signed URL");
+      const { upload_url, public_url } = await res.json();
+
+      // 2️⃣ Subir el archivo al bucket usando PUT
+      const uploadRes = await fetch(upload_url, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+      });
+
+      if (!uploadRes.ok) throw new Error("Error subiendo la imagen al bucket");
+
+      // 3️⃣ Devolver la URL pública para la DB
+      return public_url;
+    } catch (err) {
+      console.error("Error subiendo imagen:", err);
+      throw err;
+    }
   }
 
-  setPublishing(true);
-
-  try {
-    const uploadedUrls = [];
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const url = await uploadImage(selectedFiles[i]); // tu función que hace PUT a signed URL
-      uploadedUrls.push(url);
+  // --- Manejo de envío de formulario ---
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!shortDesc.trim() || !longDesc.trim()) {
+      alert('Por favor completa todos los campos requeridos');
+      return;
     }
 
-    const payload = {
-      short_description: shortDesc,
-      long_description: longDesc,
-      link: link || null,
-      imagenes: uploadedUrls.map((url, idx) => ({
-        url_foto: url,
-        imagen_portada: idx === 0, // primera foto como portada
-      })),
-    };
+    setPublishing(true);
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/publicacion/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // si usas auth
-      },
-      body: JSON.stringify(payload),
-    });
+    try {
+      // Subir todas las imágenes y obtener URLs públicas
+      const uploadedUrls = [];
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const url = await uploadImage(selectedFiles[i]);
+        uploadedUrls.push(url);
+      }
 
-    if (!res.ok) throw new Error("Error al crear publicación");
+      // Preparar payload para el backend
+      const payload = {
+        short_description: shortDesc,
+        long_description: longDesc,
+        link: link || null,
+        imagenes: uploadedUrls.map((url, idx) => ({
+          url_foto: url,
+          imagen_portada: idx === 0, // primera imagen como portada
+        })),
+      };
 
-    const data = await res.json();
-    console.log("Publicación creada:", data);
+      // Enviar al backend
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/publicacion/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
-    alert('¡Publicación creada exitosamente!');
-    resetForm();
-  } catch (err) {
-    console.error(err);
-    alert("Hubo un error al publicar");
-  } finally {
-    setPublishing(false);
-  }
-};
+      if (!res.ok) throw new Error("Error al crear publicación");
 
+      const data = await res.json();
+      console.log("Publicación creada:", data);
+
+      alert('¡Publicación creada exitosamente!');
+      resetForm();
+    } catch (err) {
+      console.error(err);
+      alert("Hubo un error al publicar");
+    } finally {
+      setPublishing(false);
+    }
+  };
 
   return (
     <div className="login-container">
