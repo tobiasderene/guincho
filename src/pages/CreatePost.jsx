@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Login.css';
 
 export default function CreatePost() {
@@ -10,7 +10,31 @@ export default function CreatePost() {
   const [year, setYear] = useState('');
   const [categoria, setCategoria] = useState('');
   const [marca, setMarca] = useState('');
+  const [categorias, setCategorias] = useState([]);
+  const [marcas, setMarcas] = useState([]);
   const [publishing, setPublishing] = useState(false);
+
+  // --- Obtener categorías y marcas del backend ---
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [catRes, marcaRes] = await Promise.all([
+          fetch(`${process.env.REACT_APP_API_URL}/categorias_vehiculos/`),
+          fetch(`${process.env.REACT_APP_API_URL}/marcas_vehiculos/`)
+        ]);
+
+        if (!catRes.ok || !marcaRes.ok) throw new Error("Error cargando combos");
+
+        const [catData, marcaData] = await Promise.all([catRes.json(), marcaRes.json()]);
+        setCategorias(catData);
+        setMarcas(marcaData);
+      } catch (err) {
+        console.error("Error cargando categorías o marcas:", err);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   // --- Manejo de archivos ---
   const handleFiles = files => {
@@ -88,7 +112,7 @@ export default function CreatePost() {
       }
 
       const payload = {
-        id_usuario: 1, // ⚠️ deberías sacarlo del token decodificado
+        id_usuario: 1, // ⚠️ reemplazar por el usuario del token
         descripcion: longDesc,
         fecha_publicacion: new Date().toISOString(),
         descripcion_corta: shortDesc,
@@ -100,7 +124,7 @@ export default function CreatePost() {
         detalle: longDesc,
         imagenes: uploadedUrls.map((url, idx) => ({
           url_foto: url,
-          imagen_portada: idx === 0 // primera imagen = portada
+          imagen_portada: idx === 0
         })),
       };
 
@@ -211,12 +235,26 @@ export default function CreatePost() {
 
         <div className="form-group">
           <label>Categoría *</label>
-          <input type="number" value={categoria} onChange={e => setCategoria(e.target.value)} required />
+          <select value={categoria} onChange={e => setCategoria(e.target.value)} required>
+            <option value="">Seleccione una categoría</option>
+            {categorias.map(cat => (
+              <option key={cat.id_categoria_vehiculo} value={cat.id_categoria_vehiculo}>
+                {cat.nombre_categoria_vehiculo}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
           <label>Marca *</label>
-          <input type="number" value={marca} onChange={e => setMarca(e.target.value)} required />
+          <select value={marca} onChange={e => setMarca(e.target.value)} required>
+            <option value="">Seleccione una marca</option>
+            {marcas.map(m => (
+              <option key={m.id_marca_vehiculo} value={m.id_marca_vehiculo}>
+                {m.nombre_marca_vehiculo}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
