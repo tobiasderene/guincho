@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6c7174, #1e3038);
+  background: linear-gradient(135deg, #ff7a3c, #893007);
   box-shadow: 0 4px 12px rgba(25, 55, 68, 0.3);
   transform: translateY(0) scale(1);
 }
