@@ -68,7 +68,7 @@ export default function CreatePost() {
   // --- Función para subir imagenes con signed URL ---
   async function uploadImage(file) {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/uploads/signed-url?filename=${encodeURIComponent(file.name)}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload/signed-url?filename=${encodeURIComponent(file.name)}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
