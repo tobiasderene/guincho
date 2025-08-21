@@ -19,29 +19,34 @@ const Login = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/login`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: new URLSearchParams({
-            username,
-            password
-          })
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ username, password })
         });
 
-        if (!response.ok) {
-          throw new Error('Credenciales incorrectas');
-        }
+        if (!response.ok) throw new Error('Credenciales incorrectas');
 
         const data = await response.json();
         const token = data.access_token;
 
-        // Guardar token JWT en localStorage
+        console.log("🚀 Token recibido del backend:", token);
+
+        // Guardar token en localStorage
         localStorage.setItem('access_token', token);
 
-        // Redirigir al inicio o a donde quieras
+        const tokenLocal = localStorage.getItem('access_token');
+        console.log("💾 Token guardado en localStorage:", tokenLocal);
+
+        if (token === tokenLocal) {
+          console.log("✅ Token recibido y guardado son idénticos");
+        } else {
+          console.warn("⚠️ Token recibido y guardado NO coinciden");
+        }
+
+        // Redirigir al inicio
         window.location.href = '/';
       } catch (err) {
         setError(err.message);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -59,14 +64,10 @@ const Login = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/me`, {
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
-      if (!response.ok) {
-        throw new Error('No autenticado');
-      }
+      if (!response.ok) throw new Error('No autenticado');
 
       const data = await response.json();
       setLoggedInUser(data.usuario.nombre);
@@ -92,7 +93,6 @@ const Login = () => {
       </div>
 
       <form onSubmit={handleLogin}>
-        
         <div className="form-group">
           <label htmlFor="username">Usuario</label>
           <input
@@ -126,21 +126,16 @@ const Login = () => {
         </button>
 
         <div className="form-links">
-          <a href="/" onClick={(e) => {
-            e.preventDefault();
-            alert('Función de recuperación de contraseña pendiente.');
-          }}>¿Olvidaste tu contraseña?</a>
+          <a href="/" onClick={(e) => { e.preventDefault(); alert('Función de recuperación de contraseña pendiente.') }}>
+            ¿Olvidaste tu contraseña?
+          </a>
         </div>
       </form>
 
       <div className="register-section">
         <p>¿No tienes una cuenta?</p>
-        <a href="/registrarse" className="register-btn">
-          Registrarse
-        </a>
+        <a href="/registrarse" className="register-btn">Registrarse</a>
       </div>
-
-
     </div>
   );
 };
