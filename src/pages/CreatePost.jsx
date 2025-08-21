@@ -68,14 +68,24 @@ export default function CreatePost() {
   // --- Función para subir imagenes con signed URL ---
   async function uploadImage(file) {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload/signed-url?filename=${encodeURIComponent(file.name)}`, {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/upload/signed-url?filename=${encodeURIComponent(file.name)}`;
+      const token = localStorage.getItem("access_token");
+
+      console.log("🚀 Llamando al endpoint:", url);
+      console.log("🔑 Token enviado:", token);
+
+      const res = await fetch(url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!res.ok) throw new Error("No se pudo obtener signed URL");
+      console.log("📥 Respuesta raw del endpoint:", res);
+
+      if (!res.ok) throw new Error(`No se pudo obtener signed URL, status: ${res.status}`);
+
       const { upload_url, public_url } = await res.json();
+      console.log("📄 Signed URL recibida:", { upload_url, public_url });
 
       const uploadRes = await fetch(upload_url, {
         method: "PUT",
@@ -84,6 +94,8 @@ export default function CreatePost() {
           "Content-Type": "application/octet-stream",
         },
       });
+
+      console.log("📤 Resultado subida al bucket:", uploadRes);
 
       if (!uploadRes.ok) throw new Error("Error subiendo la imagen al bucket");
 
@@ -112,7 +124,7 @@ export default function CreatePost() {
       }
 
       const payload = {
-        id_usuario: 1, // ⚠️ reemplazar por el usuario del token
+        id_usuario: 1, // ⚠️ reemplazar por el usuario del token si querés usar el real
         descripcion: longDesc,
         fecha_publicacion: new Date().toISOString(),
         descripcion_corta: shortDesc,
@@ -128,19 +140,23 @@ export default function CreatePost() {
         })),
       };
 
+      console.log("📦 Payload a enviar:", payload);
+
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error("Error al crear publicación");
+      console.log("📥 Respuesta de creación de publicación:", res);
+
+      if (!res.ok) throw new Error(`Error al crear publicación, status: ${res.status}`);
 
       const data = await res.json();
-      console.log("Publicación creada:", data);
+      console.log("✅ Publicación creada:", data);
 
       alert('¡Publicación creada exitosamente!');
       resetForm();
