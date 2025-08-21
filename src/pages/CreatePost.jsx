@@ -32,25 +32,56 @@ export default function CreatePost() {
     setLink('');
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!shortDesc.trim() || !longDesc.trim()) {
-      alert('Por favor completa todos los campos requeridos');
-      return;
+  const handleSubmit = async e => {
+  e.preventDefault();
+  if (!shortDesc.trim() || !longDesc.trim()) {
+    alert('Por favor completa todos los campos requeridos');
+    return;
+  }
+
+  setPublishing(true);
+
+  try {
+    const uploadedUrls = [];
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const url = await uploadImage(selectedFiles[i]); // tu función que hace PUT a signed URL
+      uploadedUrls.push(url);
     }
-    setPublishing(true);
-    setTimeout(() => {
-      console.log({
-        photos: selectedFiles.length,
-        shortDescription: shortDesc,
-        longDescription: longDesc,
-        link: link || null,
-      });
-      alert('¡Publicación creada exitosamente!');
-      resetForm();
-      setPublishing(false);
-    }, 2000);
-  };
+
+    const payload = {
+      short_description: shortDesc,
+      long_description: longDesc,
+      link: link || null,
+      imagenes: uploadedUrls.map((url, idx) => ({
+        url_foto: url,
+        imagen_portada: idx === 0, // primera foto como portada
+      })),
+    };
+
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/publicacion/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // si usas auth
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error("Error al crear publicación");
+
+    const data = await res.json();
+    console.log("Publicación creada:", data);
+
+    alert('¡Publicación creada exitosamente!');
+    resetForm();
+  } catch (err) {
+    console.error(err);
+    alert("Hubo un error al publicar");
+  } finally {
+    setPublishing(false);
+  }
+};
+
 
   return (
     <div className="login-container">
