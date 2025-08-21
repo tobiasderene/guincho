@@ -7,6 +7,9 @@ export default function CreatePost() {
   const [shortDesc, setShortDesc] = useState('');
   const [longDesc, setLongDesc] = useState('');
   const [link, setLink] = useState('');
+  const [year, setYear] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [marca, setMarca] = useState('');
   const [publishing, setPublishing] = useState(false);
 
   // --- Manejo de archivos ---
@@ -33,23 +36,23 @@ export default function CreatePost() {
     setShortDesc('');
     setLongDesc('');
     setLink('');
-
+    setYear('');
+    setCategoria('');
+    setMarca('');
   };
 
   // --- Función para subir imagenes con signed URL ---
   async function uploadImage(file) {
     try {
-      // 1️⃣ Pedir signed URL al backend
       const res = await fetch(`${process.env.REACT_APP_API_URL}/uploads/signed-url?filename=${encodeURIComponent(file.name)}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // si tu endpoint exige auth
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
       if (!res.ok) throw new Error("No se pudo obtener signed URL");
       const { upload_url, public_url } = await res.json();
 
-      // 2️⃣ Subir el archivo al bucket usando PUT
       const uploadRes = await fetch(upload_url, {
         method: "PUT",
         body: file,
@@ -60,7 +63,6 @@ export default function CreatePost() {
 
       if (!uploadRes.ok) throw new Error("Error subiendo la imagen al bucket");
 
-      // 3️⃣ Devolver la URL pública para la DB
       return public_url;
     } catch (err) {
       console.error("Error subiendo imagen:", err);
@@ -71,7 +73,7 @@ export default function CreatePost() {
   // --- Manejo de envío de formulario ---
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!shortDesc.trim() || !longDesc.trim()) {
+    if (!shortDesc.trim() || !longDesc.trim() || !title.trim() || !year || !categoria || !marca) {
       alert('Por favor completa todos los campos requeridos');
       return;
     }
@@ -79,25 +81,29 @@ export default function CreatePost() {
     setPublishing(true);
 
     try {
-      // Subir todas las imágenes y obtener URLs públicas
       const uploadedUrls = [];
       for (let i = 0; i < selectedFiles.length; i++) {
         const url = await uploadImage(selectedFiles[i]);
         uploadedUrls.push(url);
       }
 
-      // Preparar payload para el backend
       const payload = {
-        short_description: shortDesc,
-        long_description: longDesc,
-        link: link || null,
+        id_usuario: 1, // ⚠️ deberías sacarlo del token decodificado
+        descripcion: longDesc,
+        fecha_publicacion: new Date().toISOString(),
+        descripcion_corta: shortDesc,
+        titulo: title,
+        url: link || null,
+        year_vehiculo: parseInt(year),
+        id_categoria_vehiculo: parseInt(categoria),
+        id_marca_vehiculo: parseInt(marca),
+        detalle: longDesc,
         imagenes: uploadedUrls.map((url, idx) => ({
           url_foto: url,
-          imagen_portada: idx === 0, // primera imagen como portada
+          imagen_portada: idx === 0 // primera imagen = portada
         })),
       };
 
-      // Enviar al backend
       const res = await fetch(`${process.env.REACT_APP_API_URL}/publicacion/`, {
         method: "POST",
         headers: {
@@ -165,10 +171,10 @@ export default function CreatePost() {
           <label>Titulo *</label>
           <textarea
             value={title}
-            onChange={e => setTitle(e.target.value)}>
+            onChange={e => setTitle(e.target.value)}
             maxLength={50}
             required
-          </textarea>
+          />
         </div>
 
         <div className="form-group">
@@ -199,6 +205,21 @@ export default function CreatePost() {
         </div>
 
         <div className="form-group">
+          <label>Año del vehículo *</label>
+          <input type="number" value={year} onChange={e => setYear(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label>Categoría *</label>
+          <input type="number" value={categoria} onChange={e => setCategoria(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label>Marca *</label>
+          <input type="number" value={marca} onChange={e => setMarca(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
           <label>Enlace opcional</label>
           <input type="url" value={link} onChange={e => setLink(e.target.value)} placeholder="https://ejemplo.com (opcional)" />
         </div>
@@ -207,7 +228,6 @@ export default function CreatePost() {
           <button type="submit" className="publish-btn" disabled={publishing}>{publishing ? 'Publicando...' : 'Publicar'}</button>
           <button type="button" className="cancel-btn" onClick={resetForm}>Cancelar</button>
         </div>
-
       </form>
     </div>
   );
