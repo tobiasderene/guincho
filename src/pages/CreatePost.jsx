@@ -19,8 +19,8 @@ export default function CreatePost() {
     async function fetchData() {
       try {
         const [catRes, marcaRes] = await Promise.all([
-          fetch(`${process.env.REACT_APP_API_URL}/categoria/`),
-          fetch(`${process.env.REACT_APP_API_URL}/marca/`)
+          fetch(`${process.env.REACT_APP_API_URL}/api/v1/categoria/`),
+          fetch(`${process.env.REACT_APP_API_URL}/api/v1/marca/`)
         ]);
 
         if (!catRes.ok || !marcaRes.ok) throw new Error("Error cargando combos");
