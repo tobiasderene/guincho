@@ -43,7 +43,7 @@ const Login = () => {
         }
 
         // Redirigir al inicio
-        window.location.href = '/';
+        //window.location.href = '/';
       } catch (err) {
         setError(err.message);
         console.error(err);
