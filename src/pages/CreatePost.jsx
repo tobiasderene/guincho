@@ -90,9 +90,9 @@ export default function CreatePost() {
       const uploadRes = await fetch(upload_url, {
         method: "PUT",
         body: file,
-        headers: {
-          "Content-Type": "application/octet-stream",
-        },
+        //headers: {
+        //  "Content-Type": "application/octet-stream",
+        //},
       });
 
       console.log("📤 Resultado subida al bucket:", uploadRes);
