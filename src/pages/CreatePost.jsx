@@ -89,7 +89,6 @@ export default function CreatePost() {
 
       const uploadRes = await fetch(upload_url, {
         method: "PUT",
-        headers: { "Content-Type": "image/jpeg" },
         body: file
       });
 
