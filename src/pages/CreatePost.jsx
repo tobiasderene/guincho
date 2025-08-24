@@ -88,7 +88,7 @@ export default function CreatePost() {
       console.log("📄 Signed URL recibida:", { upload_url, public_url });
 
       const uploadRes = await fetch(upload_url, {
-        method: "PUT",
+        method: 'PUT',
         body: file
       });
 
