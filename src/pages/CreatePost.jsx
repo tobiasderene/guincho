@@ -14,7 +14,7 @@ export default function CreatePost() {
   const [marcas, setMarcas] = useState([]);
   const [publishing, setPublishing] = useState(false);
 
-  // --- Obtener categorías y marcas del backend ---
+  // --- Obtener categorías y marcas ---
   useEffect(() => {
     async function fetchData() {
       try {
@@ -65,45 +65,34 @@ export default function CreatePost() {
     setMarca('');
   };
 
-  // --- Función para subir imagenes con signed URL ---
+  // --- Subir imagen directo al backend ---
   async function uploadImage(file) {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/api/v1/upload/signed-url?filename=${encodeURIComponent(file.name)}`;
       const token = localStorage.getItem("access_token");
 
-      console.log("🚀 Llamando al endpoint:", url);
-      console.log("🔑 Token enviado:", token);
+      const formData = new FormData();
+      formData.append("file", file);
 
-      const res = await fetch(url, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        body: formData
       });
 
-      console.log("📥 Respuesta raw del endpoint:", res);
+      if (!res.ok) throw new Error(`Error subiendo archivo: ${res.status}`);
 
-      if (!res.ok) throw new Error(`No se pudo obtener signed URL, status: ${res.status}`);
-
-      const { upload_url, public_url } = await res.json();
-      console.log("📄 Signed URL recibida:", { upload_url, public_url });
-
-      const uploadRes = await fetch(upload_url, {
-        method: 'PUT',
-        body: file
-      });
-
-      console.log("📤 Resultado subida al bucket:", uploadRes);
-
-      if (!uploadRes.ok) throw new Error("Error subiendo la imagen al bucket");
-
-      return public_url;
+      const data = await res.json();
+      // Backend devuelve { public_url: "https://storage.googleapis.com/bucket/file.jpg" }
+      return data.public_url;
     } catch (err) {
       console.error("Error subiendo imagen:", err);
       throw err;
     }
   }
 
-  // --- Manejo de envío de formulario ---
+  // --- Enviar formulario ---
   const handleSubmit = async e => {
     e.preventDefault();
     if (!shortDesc.trim() || !longDesc.trim() || !title.trim() || !year || !categoria || !marca) {
@@ -114,6 +103,7 @@ export default function CreatePost() {
     setPublishing(true);
 
     try {
+      // Subir todas las imágenes primero
       const uploadedUrls = [];
       for (let i = 0; i < selectedFiles.length; i++) {
         const url = await uploadImage(selectedFiles[i]);
@@ -121,7 +111,7 @@ export default function CreatePost() {
       }
 
       const payload = {
-        id_usuario: 1, // ⚠️ reemplazar por el usuario del token si querés usar el real
+        id_usuario: 1, // ⚠️ reemplazar con el usuario real del token
         descripcion: longDesc,
         fecha_publicacion: new Date().toISOString(),
         descripcion_corta: shortDesc,
@@ -148,8 +138,6 @@ export default function CreatePost() {
         body: JSON.stringify(payload),
       });
 
-      console.log("📥 Respuesta de creación de publicación:", res);
-
       if (!res.ok) throw new Error(`Error al crear publicación, status: ${res.status}`);
 
       const data = await res.json();
@@ -172,6 +160,7 @@ export default function CreatePost() {
         <p>Comparte tu contenido con la comunidad</p>
       </div>
       <form onSubmit={handleSubmit}>
+        {/* --- Foto(s) --- */}
         <div className="form-group">
           <label>Fotografías</label>
           <div
@@ -204,14 +193,10 @@ export default function CreatePost() {
           )}
         </div>
 
+        {/* --- Campos del form --- */}
         <div className='form-group'> 
           <label>Titulo *</label>
-          <textarea
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            maxLength={50}
-            required
-          />
+          <textarea value={title} onChange={e => setTitle(e.target.value)} maxLength={50} required />
         </div>
 
         <div className="form-group">
@@ -276,7 +261,9 @@ export default function CreatePost() {
         </div>
         
         <div className="button-group">
-          <button type="submit" className="publish-btn" disabled={publishing}>{publishing ? 'Publicando...' : 'Publicar'}</button>
+          <button type="submit" className="publish-btn" disabled={publishing}>
+            {publishing ? 'Publicando...' : 'Publicar'}
+          </button>
           <button type="button" className="cancel-btn" onClick={resetForm}>Cancelar</button>
         </div>
       </form>
