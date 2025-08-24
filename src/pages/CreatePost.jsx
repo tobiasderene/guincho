@@ -73,7 +73,7 @@ export default function CreatePost() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload/`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
