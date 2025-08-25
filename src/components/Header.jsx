@@ -21,16 +21,19 @@ const Header = () => {
         {/* Logo */}
         <div className="logo">
           <span className="logo-text">Guincho Garage</span>
-          <img src="/guincho-logo.png" alt="Guincho Logo" className="logo-img" />
+          <img
+            src="/guincho-logo.png"
+            alt="Guincho Logo"
+            className="logo-img"
+          />
         </div>
 
-
-        {/* Navegación */}
+        {/* Navegación + botón */}
         <div className="nav-section">
           {/* Links izquierda */}
           <nav className="nav-left">
             <a href="/">Inicio</a>
-            <a href="categorias">Categorías</a>
+            <a href="/categorias">Categorías</a>
           </nav>
 
           {/* Barra de búsqueda */}
@@ -49,7 +52,7 @@ const Header = () => {
           </div>
 
           {/* Botón login / perfil */}
-          <nav className="nav-right" style={{ display: 'flex', alignItems: 'center' }}>
+          <nav className="nav-right">
             {user ? (
               <a
                 href="/perfil"
