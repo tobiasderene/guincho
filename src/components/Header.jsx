@@ -19,7 +19,11 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         {/* Logo */}
-        <div className="logo">Guincho Garage</div>
+        <div className="logo">
+          <span className="logo-text">Guincho Garage</span>
+          <img src="/guincho-logo.png" alt="Guincho Logo" className="logo-img" />
+        </div>
+
 
         {/* Navegación */}
         <div className="nav-section">

@@ -24,12 +24,25 @@
 
 /* Logo */
 .logo {
-    font-size: clamp(1rem, 5vw, 2rem);
-    font-weight: 800;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    flex-shrink: 0;
-    order: 0;
+  font-weight: 800;
+  flex-shrink: 0;
+  order: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Texto visible solo en desktop */
+.logo-text {
+  font-size: clamp(1rem, 5vw, 2rem);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: inline;
+}
+
+/* Imagen visible solo en mobile */
+.logo-img {
+  display: none;
+  height: 40px; /* ajustalo a tu gusto */
 }
 
 /* Sección nav general */
@@ -155,5 +168,12 @@
     .search-input {
         width: 100%;
         max-width: 100%;
+    }
+
+    .logo-text {
+      display: none; /* ocultar texto */
+    }
+    .logo-img {
+      display: block; /* mostrar imagen */
     }
 }
