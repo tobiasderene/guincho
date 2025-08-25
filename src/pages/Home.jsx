@@ -13,9 +13,9 @@ const Home = () => {
   // Función para traer publicaciones
   const fetchPublicaciones = async () => {
     try {
-      const res = await fetch(`/api/publicaciones?skip=${skip}&limit=${limit}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion?skip=${skip}&limit=${limit}`);
       const data = await res.json();
-      setPublicaciones(prev => [...prev, ...data.publicaciones]); // agregamos al arreglo existente
+      setPublicaciones(prev => [...prev, ...data.publicaciones]); 
       setTotal(data.total);
     } catch (err) {
       console.error('Error al traer publicaciones:', err);
