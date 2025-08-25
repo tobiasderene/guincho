@@ -1,5 +1,7 @@
+import '../styles/Post.css';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 
 const Post = () => {
   const { id } = useParams(); // <-- para tomar el id desde la URL
