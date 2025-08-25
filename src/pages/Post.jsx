@@ -62,8 +62,8 @@ const Post = () => {
 
         {/* Detalle / Especificaciones */}
         <div className="specs-section">
-          <h3>Detalles</h3>
-          <p>{post.detalle}</p>
+            <h3>Detalles</h3>
+            <p style={{ whiteSpace: 'pre-line' }}>{post.detalle}</p>
         </div>
       </div>
     </div>
