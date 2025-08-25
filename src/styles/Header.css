@@ -42,7 +42,12 @@
 /* Imagen visible solo en mobile */
 .logo-img {
   display: none;
-  height: 40px; /* ajustalo a tu gusto */
+  width: 40px;  /* tamaño razonable */
+  height: 40px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
 }
 
 /* Sección nav general */
@@ -72,7 +77,6 @@
     order: 3;
     margin-left: auto; /* lo empuja a la esquina derecha */
 }
-
 
 /* Links */
 .nav-left a,
@@ -140,14 +144,17 @@
 /* Responsivo */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: column; /* apilamos en filas */
+        align-items: stretch;
         gap: 1rem;
     }
 
     .nav-section {
-        flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
+        order: 1; /* fila 1 */
     }
 
     .nav-left {
@@ -156,11 +163,11 @@
     }
 
     .nav-right {
-        order: 2; /* Botón sube junto a las páginas */
+        order: 2;
     }
 
     .search-container {
-        order: 3; /* La barra baja sola */
+        order: 3; /* fila 2 */
         width: 100%;
         max-width: 100%;
     }
@@ -171,9 +178,9 @@
     }
 
     .logo-text {
-      display: none; /* ocultar texto */
+      display: none; /* ocultar texto en móvil */
     }
     .logo-img {
-      display: block; /* mostrar imagen */
+      display: block; /* mostrar imagen en móvil */
     }
 }
