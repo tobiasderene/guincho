@@ -33,12 +33,12 @@ const Post = () => {
     <div className="publication-container">
       {/* Imagen portada */}
       <div className="image-container">
-        {post.portada ? (
-          <img src={post.portada} alt={post.titulo} />
-        ) : (
-          <div className="image-placeholder">Sin imagen</div>
-        )}
-      </div>
+            {post.url_portada ? (
+                <img src={post.url_portada} alt={post.titulo} />
+            ) : (
+                <div className="image-placeholder">Sin imagen</div>
+            )}
+        </div>
 
       {/* Marca, Categoría, Año */}
       <div className="vehicle-info">
