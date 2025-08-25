@@ -163,7 +163,6 @@
 
     /* Logo */
     .logo {
-        display: flex;
         align-items: center;
         order: 0; /* primero en fila 1 */
     }
@@ -190,7 +189,7 @@
         display: flex;
         align-items: center;
         gap: 1rem;
-        order: 2;
+        order: 1;
     }
 
     /* Fila 2: search */
