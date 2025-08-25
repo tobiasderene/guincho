@@ -112,7 +112,7 @@ export default function CreatePost() {
       form.append("year_vehiculo", year);
       form.append("id_categoria_vehiculo", categoria);
       form.append("id_marca_vehiculo", marca);
-      form.append("id_usuario", 1); // reemplazar con el real del token
+      // ❌ Eliminé: form.append("id_usuario", 1);
 
       // Adjuntar todas las imágenes
       selectedFiles.forEach(file => form.append("files", file));
@@ -120,8 +120,7 @@ export default function CreatePost() {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion/`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          // NO poner Content-Type, fetch lo maneja solo con FormData
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
         },
         body: form
       });
