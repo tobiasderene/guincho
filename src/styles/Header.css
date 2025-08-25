@@ -151,6 +151,7 @@
     }
 
     .nav-section {
+        flex: 1;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -183,5 +184,6 @@
     }
     .logo-img {
       display: block; /* mostrar imagen en móvil */
+      order: 1;
     }
 }
