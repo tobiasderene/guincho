@@ -87,7 +87,12 @@ const Home = () => {
       </section>
 
       {/* Estado de carga o error */}
-      {loading && <p style={{ textAlign: 'center' }}>Cargando publicaciones...</p>}
+      {loading && (
+        <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+          <WheelLoader />
+          <p style={{ marginTop: '1rem', color: '#666' }}>Cargando publicaciones...</p>
+        </div>
+      )}
       {error && <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>}
 
       {/* Botón "Ver más" */}
