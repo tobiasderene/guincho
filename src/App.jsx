@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/SignUp.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import './styles/styles.css';
+import Post from "./pages/Post.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
         <Route path="/iniciarsesion" element={<Login />} />
         <Route path="/registrarse" element={<Register />} />
         <Route path="/crearpost" element={<CreatePost />} />
+        <Route path="/post/:id" element={<Post />} />
       </Routes>
     </>
   );

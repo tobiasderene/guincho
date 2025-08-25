@@ -1,0 +1,71 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+const Post = () => {
+  const { id } = useParams(); // <-- para tomar el id desde la URL
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/v1/publicacion/${id}`
+        );
+        const data = await res.json();
+        setPost(data);
+      } catch (error) {
+        console.error("Error cargando publicación:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  if (loading) return <div>Cargando publicación...</div>;
+  if (!post) return <div>No se encontró la publicación</div>;
+
+  return (
+    <div className="publication-container">
+      {/* Imagen portada */}
+      <div className="image-container">
+        {post.portada ? (
+          <img src={post.portada} alt={post.titulo} />
+        ) : (
+          <div className="image-placeholder">Sin imagen</div>
+        )}
+      </div>
+
+      {/* Marca, Categoría, Año */}
+      <div className="vehicle-info">
+        <div className="brand">{post.nombre_marca_vehiculo}</div>
+        <div className="category">{post.nombre_categoria_vehiculo}</div>
+        <div className="year">{post.year_vehiculo}</div>
+      </div>
+
+      {/* Usuario */}
+      <div className="user-info">
+        Publicado por: <b>{post.nombre_usuario}</b>
+      </div>
+
+      {/* Contenido */}
+      <div className="content-layout">
+        {/* Título y Descripción */}
+        <div className="description-section">
+          <h2>{post.titulo}</h2>
+          <p className="description-text">{post.descripcion}</p>
+        </div>
+
+        {/* Detalle / Especificaciones */}
+        <div className="specs-section">
+          <h3>Detalles</h3>
+          <p>{post.detalle}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Post;
