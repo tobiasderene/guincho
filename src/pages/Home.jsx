@@ -1,4 +1,5 @@
 import '../styles/Home.css';
+import WheelLoader from '../components/WheelLoader';
 import BotonPlus from '../components/BotonPlus';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
