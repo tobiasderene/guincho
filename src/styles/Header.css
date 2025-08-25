@@ -1,53 +1,74 @@
+/* Header */
 .header {
-    background: #7BB5DC !important;
+    background: #7BB5DC;
     padding: 1rem 0;
     box-shadow: 0 4px 12px rgba(25, 55, 68, 0.3);
     position: relative;
     top: 0;
     z-index: 100;
+    width: 100%;
 }
 
+/* Contenedor principal */
 .header-content {
-    max-width: 1200px;
+    width: 100%;
+    max-width: 99%;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    min-height: 60px; 
+    min-height: 60px;
 }
 
+/* Logo */
 .logo {
-    font-size: 2rem;
+    font-size: clamp(1rem, 5vw, 2rem);
     font-weight: 800;
     color: white;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     flex-shrink: 0;
+    order: 0;
 }
 
-/* Contenedor de navegación que incluye nav + búsqueda */
+/* Sección nav general */
 .nav-section {
     display: flex;
-    align-items: center; /* Alinea verticalmente todos los elementos internos */
-    gap: 2rem;
-    flex: 1;
-    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center;
+    flex: 1; /* ocupa todo el espacio disponible */
+    justify-content: space-between; /* reparte los bloques */
+    gap: 3rem; /* más separación entre ellos */
+    flex-wrap: nowrap;
 }
 
-.nav-left,
+/* Nav izquierda (links) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* más espacio entre links */
+    order: 1;
+    flex-shrink: 0;
+}
+
+/* Nav derecha (botón login) */
 .nav-right {
     display: flex;
-    align-items: center; /* Centra verticalmente los enlaces */
-    gap: 2rem;
+    align-items: center;
+    gap: 1.5rem;
+    order: 3;
+    margin-left: auto; /* lo empuja a la esquina derecha */
 }
 
+
+/* Links */
 .nav-left a,
 .nav-right a {
     color: white;
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem 1rem;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem);
     border-radius: 8px;
     transition: all 0.3s ease;
     white-space: nowrap;
@@ -59,7 +80,12 @@
     transform: translateY(-1px);
 }
 
+/* Barra de búsqueda */
 .search-container {
+    order: 2;
+    flex-grow: 1;          /* ocupa todo el espacio libre */
+    min-width: 150px;      /* no se hace demasiado chiquito */
+    max-width: 600px;      /* límite para que no se estire infinito en pantallas grandes */
     margin: 0 1rem;
 }
 
@@ -70,7 +96,7 @@
 }
 
 .search-input {
-    width: 300px;
+    width: 100%;           /* ocupa todo el ancho disponible del contenedor */
     padding: 0.6rem 0.8rem 0.6rem 2.5rem;
     border: none;
     border-radius: 25px;
@@ -100,32 +126,34 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .nav-section {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start; 
-  }
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 
-  .search-input {
-    width: 250px;
-  }
+    .nav-section {
+        flex-wrap: wrap;
+        width: 100%;
+    }
 
-  .nav-left,
-  .nav-right {
-    gap: 1rem;
-  }
+    .nav-left {
+        order: 1;
+        gap: 1rem;
+    }
 
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start; 
-  }
+    .nav-right {
+        order: 2; /* Botón sube junto a las páginas */
+    }
 
-  .nav-section {
-    width: 100%;
-  }
+    .search-container {
+        order: 3; /* La barra baja sola */
+        width: 100%;
+        max-width: 100%;
+    }
 
-  .search-input {
-    width: 200px;
-  }
+    .search-input {
+        width: 100%;
+        max-width: 100%;
+    }
 }

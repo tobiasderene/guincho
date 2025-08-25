@@ -18,14 +18,18 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
+        {/* Logo */}
         <div className="logo">Guincho Garage</div>
 
+        {/* Navegación */}
         <div className="nav-section">
+          {/* Links izquierda */}
           <nav className="nav-left">
             <a href="/">Inicio</a>
             <a href="categorias">Categorías</a>
           </nav>
 
+          {/* Barra de búsqueda */}
           <div className="search-container">
             <div className="search-input-wrapper">
               <Search className="search-icon" size={18} />
@@ -40,13 +44,20 @@ const Header = () => {
             </div>
           </div>
 
+          {/* Botón login / perfil */}
           <nav className="nav-right" style={{ display: 'flex', alignItems: 'center' }}>
             {user ? (
-              <a href="/perfil" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <a
+                href="/perfil"
+                style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
+              >
                 <UserIconName userName={user.nombre} />
               </a>
             ) : (
-              <a href="/iniciarsesion" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <a
+                href="/iniciarsesion"
+                style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
+              >
                 <UserIconSimple />
               </a>
             )}
