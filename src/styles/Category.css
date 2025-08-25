@@ -3,29 +3,6 @@
   min-height: 100vh;
 }
 
-.header {
-  background: linear-gradient(to right, #475569, #1e293b);
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.logo {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: white;
-}
 
 .nav-search-section {
   display: flex;
