@@ -92,9 +92,9 @@ export default function CreatePost() {
     }
   }
 
-  // --- Enviar formulario ---
   const handleSubmit = async e => {
     e.preventDefault();
+
     if (!shortDesc.trim() || !longDesc.trim() || !title.trim() || !year || !categoria || !marca) {
       alert('Por favor completa todos los campos requeridos');
       return;
@@ -103,39 +103,27 @@ export default function CreatePost() {
     setPublishing(true);
 
     try {
-      // Subir todas las imágenes primero
-      const uploadedUrls = [];
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const url = await uploadImage(selectedFiles[i]);
-        uploadedUrls.push(url);
-      }
+      const form = new FormData();
+      form.append("titulo", title);
+      form.append("descripcion_corta", shortDesc);
+      form.append("descripcion", longDesc);
+      form.append("detalle", longDesc);
+      form.append("url", link || "");
+      form.append("year_vehiculo", year);
+      form.append("id_categoria_vehiculo", categoria);
+      form.append("id_marca_vehiculo", marca);
+      form.append("id_usuario", 1); // reemplazar con el real del token
 
-      const payload = {
-        id_usuario: 1, // ⚠️ reemplazar con el usuario real del token
-        descripcion: longDesc,
-        fecha_publicacion: new Date().toISOString(),
-        descripcion_corta: shortDesc,
-        titulo: title,
-        url: link || null,
-        year_vehiculo: parseInt(year),
-        id_categoria_vehiculo: parseInt(categoria),
-        id_marca_vehiculo: parseInt(marca),
-        detalle: longDesc,
-        imagenes: uploadedUrls.map((url, idx) => ({
-          url_foto: url,
-          imagen_portada: idx === 0
-        })),
-      };
-
-      console.log("📦 Payload a enviar:", payload);
+      // Adjuntar todas las imágenes
+      selectedFiles.forEach(file => form.append("files", file));
 
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          // NO poner Content-Type, fetch lo maneja solo con FormData
         },
-        body: JSON.stringify(payload),
+        body: form
       });
 
       if (!res.ok) throw new Error(`Error al crear publicación, status: ${res.status}`);
