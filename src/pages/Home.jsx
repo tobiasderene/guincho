@@ -75,7 +75,7 @@ const Home = () => {
                   Publicado:{' '}
                   {new Date(pub.fecha_publicacion || Date.now()).toLocaleDateString()}
                 </span>
-                <a className="read-more" href={`/publicacion/${pub.id}`}>
+                <a className="read-more" href={`/post/${pub.id}`}>
                   Leer más
                 </a>
               </div>
