@@ -23,6 +23,9 @@ const Home = () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       if (!data.publicaciones) throw new Error('Datos inválidos recibidos del backend');
+      data.publicaciones.forEach(pub => {
+        console.log('ID:', pub.id, 'URL portada:', pub.url_portada);
+      });
 
       // Filtrar duplicados por id, por si acaso
       setPublicaciones(prev => [
