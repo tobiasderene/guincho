@@ -144,7 +144,8 @@
 /* Responsivo */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: column; /* apilamos en filas */
+        flex-direction: row; /* apilamos en filas */
+        flex-wrap: wrap;
         align-items: stretch;
         gap: 1rem;
     }
