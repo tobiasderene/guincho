@@ -19,7 +19,7 @@ const Home = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/api/v1/publicacion?skip=${skip}&limit=${limit}`);
+      const res = await fetch(`${API_URL}/api/v1/publicacion/?skip=${skip}&limit=${limit}`);
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       if (!data.publicaciones) throw new Error('Datos inválidos recibidos del backend');
