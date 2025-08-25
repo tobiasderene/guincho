@@ -14,8 +14,10 @@ const Home = () => {
   const fetchPublicaciones = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion?skip=${skip}&limit=${limit}`);
-      const data = await res.json();
-      setPublicaciones(prev => [...prev, ...data.publicaciones]); 
+      const text = await res.text();  // 👈 recibe texto crudo
+      console.log('Respuesta cruda:', text);
+      const data = JSON.parse(text);  // parse manual para ver si falla
+      setPublicaciones(prev => [...prev, ...data.publicaciones]);
       setTotal(data.total);
     } catch (err) {
       console.error('Error al traer publicaciones:', err);
