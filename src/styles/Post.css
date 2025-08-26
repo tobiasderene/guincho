@@ -11,7 +11,7 @@
 
 .image-container {
   width: calc(100% + 4rem); 
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/7;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   margin: 0 -2rem 1.5rem -2rem; 
