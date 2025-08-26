@@ -205,7 +205,7 @@ export default function CreatePost() {
             className="long-description"
             value={longDesc}
             onChange={e => setLongDesc(e.target.value)}
-            maxLength={1000}
+            maxLength={5000}
             required
           />
           <div className={`char-counter ${longDesc.length > 5000 ? 'error' : longDesc.length > 4500 ? 'warning' : ''}`}>
