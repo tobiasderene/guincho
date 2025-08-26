@@ -1,7 +1,12 @@
 /* En tu CSS o al inicio del archivo */
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-/* Header */
+/* Forzar scrollbar siempre visible */
+html {
+    overflow-y: scroll;
+}
+
+/* Header - tu código actual sin cambios */
 .header {
     background: #7BB5DC;
     padding: 1rem 0;
@@ -9,7 +14,7 @@
     position: relative;
     top: 0;
     z-index: 100;
-    width: 100dvw;
+    width: 100%;
 }
 
 /* Contenedor principal */
@@ -50,15 +55,16 @@
     height: 50px;
     object-fit: contain;
     background: white;
-    border-radius: 40px / 25px; /* radio horizontal / radio vertical */}
+    border-radius: 40px / 25px;
+}
 
 /* Sección nav general */
 .nav-section {
     display: flex;
     align-items: center;
-    flex: 1; /* ocupa todo el espacio disponible */
-    justify-content: space-between; /* reparte los bloques */
-    gap: 3rem; /* más separación entre ellos */
+    flex: 1;
+    justify-content: space-between;
+    gap: 3rem;
     flex-wrap: nowrap;
 }
 
@@ -66,7 +72,7 @@
 .nav-left {
     display: flex;
     align-items: center;
-    gap: 2rem; /* más espacio entre links */
+    gap: 2rem;
     order: 1;
     flex-shrink: 0;
 }
@@ -77,9 +83,8 @@
     align-items: center;
     gap: 1.5rem;
     order: 3;
-    margin-left: auto; /* lo empuja a la esquina derecha */
+    margin-left: auto;
 }
-
 
 /* Links */
 .nav-left a,
@@ -103,9 +108,9 @@
 /* Barra de búsqueda */
 .search-container {
     order: 2;
-    flex-grow: 1;          /* ocupa todo el espacio libre */
-    min-width: 150px;      /* no se hace demasiado chiquito */
-    max-width: 600px;      /* límite para que no se estire infinito en pantallas grandes */
+    flex-grow: 1;
+    min-width: 150px;
+    max-width: 600px;
     margin: 0 1rem;
 }
 
@@ -116,7 +121,7 @@
 }
 
 .search-input {
-    width: 100%;           /* ocupa todo el ancho disponible del contenedor */
+    width: 100%;
     padding: 0.6rem 0.8rem 0.6rem 2.5rem;
     border: none;
     border-radius: 25px;
@@ -169,12 +174,12 @@
     }
 
     .nav-right {
-        order: 2; /* Botón sube junto a las páginas */
+        order: 2;
     }
 
     .search-container {
       display: none;
-      order: 3; /* La barra baja sola */
+      order: 3;
       width: 100%;
       max-width: 100%;
     }
@@ -185,9 +190,9 @@
     }
 
     .logo-text {
-      display: none; /* ocultar texto */
+      display: none;
     }
     .logo-img {
-      display: block; /* mostrar imagen */
+      display: block;
     }
 }
