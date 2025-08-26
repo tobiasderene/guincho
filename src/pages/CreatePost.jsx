@@ -142,7 +142,7 @@ export default function CreatePost() {
 
   return (
     <div className="login-container">
-      <div className="logo">
+      <div className="login-logo">
         <h1>Crear Publicación</h1>
         <p>Comparte tu contenido con la comunidad</p>
       </div>
