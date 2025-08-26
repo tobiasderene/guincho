@@ -1,3 +1,6 @@
+/* En tu CSS o al inicio del archivo */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 /* Header */
 .header {
     background: #7BB5DC;
@@ -37,6 +40,7 @@
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: inline;
+  font-family: 'Lobster', cursive;
 }
 
 /* Imagen visible solo en mobile */
