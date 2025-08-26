@@ -24,6 +24,12 @@
 
 /* Logo */
 .logo {
+  flex-shrink: 0;    
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;  /* que no se encoja */
+  width: auto;      /* importante: no usar ancho fijo */
+  height: auto;     /* que se ajuste al contenido */
   font-weight: 800;
   flex-shrink: 0;
   order: 0;
@@ -145,9 +151,15 @@
 @media (max-width: 768px) {
     /* Contenedor principal */
     .header-content {
-        flex-direction: column; /* apilamos filas */
-        align-items: stretch;
-        gap: 0.5rem;
+      width: 100%;
+      max-width: 99%;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      min-height: 60px;
     }
 
     /* Fila 1: logo + nav-left + nav-right */
@@ -158,13 +170,14 @@
         align-items: center;
         width: 100%;
         gap: 1rem;
-        order: 1;
     }
 
     /* Logo */
     .logo {
-        align-items: center;
-        order: 0; /* primero en fila 1 */
+      flex-shrink: 0;    
+      display: flex-start;
+      align-items: center;
+      order: 0; /* primero en fila 1 */
     }
     .logo-text {
         display: none; /* ocultar texto en móvil */
