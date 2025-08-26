@@ -4,23 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// -------------------- Google Analytics --------------------
-const GA_MEASUREMENT_ID = 'G-J2PFQF4155';
-
-// Cargar el script externo
-const script = document.createElement('script');
-script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-script.async = true;
-document.head.appendChild(script);
-
-// Inicializar gtag
-window.dataLayer = window.dataLayer || [];
-function gtag(){window.dataLayer.push(arguments);}
-window.gtag = gtag; // lo dejamos global
-gtag('js', new Date());
-gtag('config', GA_MEASUREMENT_ID);
-// -----------------------------------------------------------
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -28,4 +11,7 @@ root.render(
   </React.StrictMode>
 );
 
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
