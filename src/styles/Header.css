@@ -24,12 +24,6 @@
 
 /* Logo */
 .logo {
-  flex-shrink: 0;    
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;  /* que no se encoja */
-  width: auto;      /* importante: no usar ancho fijo */
-  height: auto;     /* que se ajuste al contenido */
   font-weight: 800;
   flex-shrink: 0;
   order: 0;
@@ -46,15 +40,7 @@
 }
 
 /* Imagen visible solo en mobile */
-.logo-img {
-  display: none;
-  width: 40px;  /* tamaño razonable */
-  height: 40px;
-  object-fit: contain;
-  background: white;
-  border-radius: 50%;
-  padding: 4px;
-}
+.logo-img { display: none; width: 40px; /* tamaño razonable */ height: 40px; object-fit: contain; background: white; border-radius: 50%; padding: 4px; }
 
 /* Sección nav general */
 .nav-section {
@@ -83,6 +69,7 @@
     order: 3;
     margin-left: auto; /* lo empuja a la esquina derecha */
 }
+
 
 /* Links */
 .nav-left a,
@@ -149,72 +136,48 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-    /* Contenedor principal */
     .header-content {
-      width: 100%;
-      max-width: 99%;
-      margin: 0 auto;
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      min-height: 60px;
-    }
-
-    /* Fila 1: logo + nav-left + nav-right */
-    .nav-section {
+        width: 100%;
+        max-width: 99%;
+        margin: 0 auto;
+        padding: 0 1rem;
         display: flex;
-        flex-direction: row;       /* todo en línea */
+        align-items: center;
         justify-content: space-between;
-        align-items: center;
+        gap: 2rem;
+        min-height: 60px;
+    }
+
+    .nav-section {
+        flex-wrap: wrap;
         width: 100%;
-        gap: 1rem;
     }
 
-    /* Logo */
-    .logo {
-      flex-shrink: 0;    
-      display: flex-start;
-      align-items: center;
-      order: 0; /* primero en fila 1 */
-    }
-    .logo-text {
-        display: none; /* ocultar texto en móvil */
-    }
-    .logo-img {
-        display: block; /* mostrar imagen en móvil */
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-        border-radius: 50%;
-        padding: 4px;
-    }
-
-    /* Nav izquierda y derecha */
     .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
         order: 1;
-    }
-    .nav-right {
-        display: flex;
-        align-items: center;
         gap: 1rem;
-        order: 1;
     }
 
-    /* Fila 2: search */
+    .nav-right {
+        order: 2; /* Botón sube junto a las páginas */
+    }
+
     .search-container {
-        order: 2;  /* segunda fila */
-        width: 100%;
-        max-width: 100%;
-        margin-top: 0.5rem;
+      display: none;
+      order: 3; /* La barra baja sola */
+      width: 100%;
+      max-width: 100%;
     }
 
     .search-input {
         width: 100%;
         max-width: 100%;
+    }
+
+    .logo-text {
+      display: none; /* ocultar texto */
+    }
+    .logo-img {
+      display: block; /* mostrar imagen */
     }
 }
