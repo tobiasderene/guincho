@@ -229,7 +229,7 @@ const Register = () => {
   return (
     <div className="login-container">
       <BackButton/>
-      <div className="logo">
+      <div className="login-logo">
         <h1>Crear Cuenta</h1>
         <p>Únete a nuestra comunidad</p>
       </div>
