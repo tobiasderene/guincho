@@ -87,7 +87,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <BackButton />
-      <div className="logo">
+      <div className="login-logo">
         <h1>Bienvenido</h1>
         <p>Inicia sesión en tu cuenta</p>
       </div>
