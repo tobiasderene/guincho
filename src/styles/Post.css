@@ -9,6 +9,7 @@
   overflow: hidden; /* Para que la imagen respete el border-radius */
 }
 
+/* La imagen va sin padding */
 .image-container {
   width: 100%;
   aspect-ratio: 16/9;
@@ -16,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0; /* Sin margin porque el padding está abajo */
 }
 
 .image-container img {
@@ -31,12 +32,12 @@
   font-style: italic;
 }
 
-/* Contenido con padding solo después de la imagen */
+/* TODO el contenido después de la imagen tiene padding */
 .content-wrapper {
-  padding: 0 2rem 2rem 2rem;
+  padding: 2rem; /* Padding uniforme en todos los lados */
 }
 
-/* Marca y año */
+/* Resto del CSS igual... */
 .vehicle-info {
   display: flex;
   justify-content: space-between;
@@ -59,14 +60,12 @@
   font-size: 1rem;
 }
 
-/* Contenido */
 .content-layout {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 2rem;
 }
 
-/* Descripción */
 .description-section h3,
 .specs-section h3 {
   font-size: 1.2rem;
@@ -79,7 +78,6 @@
   color: #555;
 }
 
-/* Especificaciones */
 .specs-section {
   background: #fafafa;
   border-radius: 12px;
@@ -119,7 +117,7 @@
   }
   
   .content-wrapper {
-    padding: 0 1rem 1rem 1rem;
+    padding: 1.5rem; /* Padding más pequeño en mobile */
   }
   
   .content-layout {
