@@ -41,6 +41,7 @@
   text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: inline;
   font-family: 'Lobster', cursive;
+  -webkit-text-stroke: 1px black;
 }
 
 /* Imagen visible solo en mobile */
