@@ -104,7 +104,7 @@
 /* Para desktop: altura fija de 400px */
 @media (min-width: 1024px) {
   .image-container {
-    height: 400px;
+    height: 600px;
     padding-top: 0;
   }
 }
