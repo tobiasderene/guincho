@@ -43,6 +43,7 @@ const Post = () => {
 
       {/* Marca, Categoría, Año */}
       <div className="vehicle-info">
+        <div className="category">{post.titulo}</div>
         <div className="brand">{post.nombre_marca_vehiculo}</div>
         <div className="category">{post.nombre_categoria_vehiculo}</div>
         <div className="year">{post.year_vehiculo}</div>
@@ -55,9 +56,8 @@ const Post = () => {
 
       {/* Contenido */}
       <div className="content-layout">
-        {/* Título */}
-        <h1>{post.titulo}</h1>
-        {/* Descripción */}
+        {/* Título y Descripción */}
+        
         <div className="description-section">
           
           <p className="description-text">{post.descripcion}</p>
