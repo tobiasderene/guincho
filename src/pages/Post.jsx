@@ -31,6 +31,8 @@ const Post = () => {
 
   return (
     <div className="publication-container">
+      {/* Título */}
+      <h1>{post.titulo}</h1>
       {/* Imagen portada */}
       <div className="image-container">
             {post.url_portada ? (
@@ -54,9 +56,9 @@ const Post = () => {
 
       {/* Contenido */}
       <div className="content-layout">
-        {/* Título y Descripción */}
+        {/* Descripción */}
         <div className="description-section">
-          <h2>{post.titulo}</h2>
+          
           <p className="description-text">{post.descripcion}</p>
         </div>
 
