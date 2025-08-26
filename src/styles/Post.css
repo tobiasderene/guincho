@@ -10,11 +10,11 @@
 }
 
 .image-container {
-  width: calc(100% + 4rem); /* Ancho del contenedor más el padding lateral (2rem * 2) */
-  height: 400px;
+  width: calc(100% + 4rem); 
+  aspect-ratio: 16/9;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
-  margin: 0 -2rem 1.5rem -2rem; /* Márgenes negativos simétricos */
+  margin: 0 -2rem 1.5rem -2rem; 
   background: #f2f2f2;
   display: flex;
   align-items: center;
