@@ -45,7 +45,7 @@
 }
 
 /* Imagen visible solo en mobile */
-.logo-img { width: 40px; /* tamaño razonable */ height: 40px; object-fit: contain; background: white; border-radius: 50%; padding: 4px; }
+.logo-img { width: 60px; /* tamaño razonable */ height: 60px; object-fit: contain; background: white; border-radius: 50%; padding: 2px; }
 
 /* Sección nav general */
 .nav-section {
