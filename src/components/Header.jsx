@@ -20,12 +20,12 @@ const Header = () => {
       <div className="header-content">
         {/* Logo */}
         <div className="logo">
-          <span className="logo-text">Guincho Garage</span>
           <img
             src="/guincho-logo.png"
             alt="Guincho Logo"
             className="logo-img"
           />
+          <span className="logo-text">Guincho Garage</span>
         </div>
 
         {/* Navegación + botón */}
