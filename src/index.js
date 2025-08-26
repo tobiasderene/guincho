@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Importa Firebase para inicializarlo
+import './firebase'; // Esto ejecuta firebase.js y ya inicializa Firebase y Analytics
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
