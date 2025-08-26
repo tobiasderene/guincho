@@ -57,27 +57,24 @@ const Post = () => {
            {/* Título y Descripción */}
            
            <div className="description-section">
-             
-             <p className="description-text">{post.descripcion}</p>
-           </div>
+              {post.descripcion.split("\n").map((parrafo, idx) => (
+                <div key={idx} style={{ marginBottom: "1rem" }}>
+                  <p className="description-text">{parrafo}</p>
+                  {post.imagenes && post.imagenes[idx + 1] && ( // +1 porque la [0] es la portada
+                    <img
+                      src={post.imagenes[idx + 1]}
+                      alt={`detalle-${idx}`}
+                      style={{ maxWidth: "100%", margin: "10px 0", borderRadius: "8px" }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
                {/* Detalle / Especificaciones */}
            <div className="specs-section">
-              <h3>Detalles</h3>
-              <div className="detalle-contenido">
-                {post.detalle.split("\n").map((parrafo, idx) => (
-                  <div key={idx} style={{ marginBottom: "1rem" }}>
-                    <p>{parrafo}</p>
-                    {post.imagenes && post.imagenes[idx] && (
-                      <img
-                        src={post.imagenes[idx]}
-                        alt={`detalle-${idx}`}
-                        style={{ maxWidth: "100%", margin: "10px 0", borderRadius: "8px" }}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+               <h3>Detalles</h3>
+               <p style={{ whiteSpace: 'pre-line' }}>{post.detalle}</p>
+           </div>
         </div>
       </div>
     </div>
