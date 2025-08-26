@@ -27,11 +27,11 @@
 
 /* Logo */
 .logo {
-  font-weight: 800;
-  flex-shrink: 0;
-  order: 0;
-  display: flex;
-  align-items: center;
+  font-weight: 800 !important;
+  flex-shrink: 0 !important;
+  order: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* Texto visible solo en desktop */
