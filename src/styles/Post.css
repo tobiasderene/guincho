@@ -1,28 +1,25 @@
 .publication-container {
   max-width: 90%;
   margin: 2rem auto;
-  padding: 0 2rem 2rem 2rem; /* Solo padding en los lados y abajo */
   background: #fff;
-  border-radius: 8px;
+  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   font-family: "Inter", sans-serif;
   color: #222;
+  overflow: hidden; /* Para que la imagen respete el border-radius */
 }
 
 .image-container {
-  position: relative;
-  left: -2rem;
-  width: calc(100% + 4rem);
-  height: 0;
-  padding-top: 56.25%; /* 16:9 para móviles */
-  border-radius: 16px 16px 0 0;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
+  width: 100%;
+  aspect-ratio: 16/9;
   background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
 .image-container img {
-  position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -32,6 +29,11 @@
   color: #666;
   font-size: 1.1rem;
   font-style: italic;
+}
+
+/* Contenido con padding solo después de la imagen */
+.content-wrapper {
+  padding: 0 2rem 2rem 2rem;
 }
 
 /* Marca y año */
@@ -60,7 +62,7 @@
 /* Contenido */
 .content-layout {
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 2rem;
 }
 
@@ -102,22 +104,36 @@
   color: #666;
 }
 
-/* Para desktop: altura fija de 400px */
-@media (min-width: 1024px) {
-  .image-container {
-    height: 600px;
-    padding-top: 0;
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+  .content-layout {
+    grid-template-columns: 2fr 1fr;
   }
 }
 
-/* Responsive */
+/* Responsive para móviles */
 @media (max-width: 768px) {
+  .publication-container {
+    max-width: 95%;
+    margin: 1rem auto;
+  }
+  
+  .content-wrapper {
+    padding: 0 1rem 1rem 1rem;
+  }
+  
   .content-layout {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-
+  
   .vehicle-info {
     flex-direction: column;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .specs-section {
+    padding: 1rem;
   }
 }
