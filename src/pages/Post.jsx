@@ -40,33 +40,31 @@ const Post = () => {
                 <div className="image-placeholder">Sin imagen</div>
             )}
         </div>
-
-      {/* Marca, Categoría, Año */}
-      <div className="vehicle-info">
-        <div className="category">{post.titulo}</div>
-        <div className="brand">{post.nombre_marca_vehiculo}</div>
-        <div className="category">{post.nombre_categoria_vehiculo}</div>
-        <div className="year">{post.year_vehiculo}</div>
-      </div>
-
-      {/* Usuario */}
-      <div className="user-info">
-        Publicado por: <b>{post.nombre_usuario}</b>
-      </div>
-
-      {/* Contenido */}
-      <div className="content-layout">
-        {/* Título y Descripción */}
-        
-        <div className="description-section">
-          
-          <p className="description-text">{post.descripcion}</p>
-        </div>
-
-        {/* Detalle / Especificaciones */}
-        <div className="specs-section">
-            <h3>Detalles</h3>
-            <p style={{ whiteSpace: 'pre-line' }}>{post.detalle}</p>
+     <div className="content-wrapper">
+         {/* Marca, Categoría, Año */}
+         <div className="vehicle-info">
+           <div className="category">{post.titulo}</div>
+           <div className="brand">{post.nombre_marca_vehiculo}</div>
+           <div className="category">{post.nombre_categoria_vehiculo}</div>
+           <div className="year">{post.year_vehiculo}</div>
+         </div>
+             {/* Usuario */}
+         <div className="user-info">
+           Publicado por: <b>{post.nombre_usuario}</b>
+         </div>
+             {/* Contenido */}
+         <div className="content-layout">
+           {/* Título y Descripción */}
+           
+           <div className="description-section">
+             
+             <p className="description-text">{post.descripcion}</p>
+           </div>
+               {/* Detalle / Especificaciones */}
+           <div className="specs-section">
+               <h3>Detalles</h3>
+               <p style={{ whiteSpace: 'pre-line' }}>{post.detalle}</p>
+           </div>
         </div>
       </div>
     </div>
