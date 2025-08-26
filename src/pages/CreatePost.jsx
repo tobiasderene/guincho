@@ -208,8 +208,8 @@ export default function CreatePost() {
             maxLength={1000}
             required
           />
-          <div className={`char-counter ${longDesc.length > 900 ? 'error' : longDesc.length > 800 ? 'warning' : ''}`}>
-            {longDesc.length}/1000
+          <div className={`char-counter ${longDesc.length > 5000 ? 'error' : longDesc.length > 4500 ? 'warning' : ''}`}>
+            {longDesc.length}/5000
           </div>
         </div>
 
