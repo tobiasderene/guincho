@@ -6,6 +6,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState('');
   const [shortDesc, setShortDesc] = useState('');
   const [longDesc, setLongDesc] = useState('');
+  const [caracteristicas, setCaracteristicas] = useState('');
   const [link, setLink] = useState('');
   const [year, setYear] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -59,6 +60,7 @@ export default function CreatePost() {
     setTitle('');
     setShortDesc('');
     setLongDesc('');
+    setCaracteristicas('');
     setLink('');
     setYear('');
     setCategoria('');
@@ -69,7 +71,6 @@ export default function CreatePost() {
   async function uploadImage(file) {
     try {
       const token = localStorage.getItem("access_token");
-
       const formData = new FormData();
       formData.append("file", file);
 
@@ -82,9 +83,7 @@ export default function CreatePost() {
       });
 
       if (!res.ok) throw new Error(`Error subiendo archivo: ${res.status}`);
-
       const data = await res.json();
-      // Backend devuelve { public_url: "https://storage.googleapis.com/bucket/file.jpg" }
       return data.public_url;
     } catch (err) {
       console.error("Error subiendo imagen:", err);
@@ -95,7 +94,7 @@ export default function CreatePost() {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!shortDesc.trim() || !longDesc.trim() || !title.trim() || !year || !categoria || !marca) {
+    if (!shortDesc.trim() || !longDesc.trim() || !caracteristicas.trim() || !title.trim() || !year || !categoria || !marca) {
       alert('Por favor completa todos los campos requeridos');
       return;
     }
@@ -107,12 +106,11 @@ export default function CreatePost() {
       form.append("titulo", title);
       form.append("descripcion_corta", shortDesc);
       form.append("descripcion", longDesc);
-      form.append("detalle", longDesc);
+      form.append("detalle", caracteristicas); // Nuevo campo
       form.append("url", link || "");
       form.append("year_vehiculo", year);
       form.append("id_categoria_vehiculo", categoria);
       form.append("id_marca_vehiculo", marca);
-      // ❌ Eliminé: form.append("id_usuario", 1);
 
       // Adjuntar todas las imágenes
       selectedFiles.forEach(file => form.append("files", file));
@@ -210,6 +208,20 @@ export default function CreatePost() {
           />
           <div className={`char-counter ${longDesc.length > 5000 ? 'error' : longDesc.length > 4500 ? 'warning' : ''}`}>
             {longDesc.length}/5000
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Características *</label>
+          <textarea
+            className="long-description"
+            value={caracteristicas}
+            onChange={e => setCaracteristicas(e.target.value)}
+            maxLength={2000}
+            required
+          />
+          <div className={`char-counter ${caracteristicas.length > 2000 ? 'error' : caracteristicas.length > 1800 ? 'warning' : ''}`}>
+            {caracteristicas.length}/2000
           </div>
         </div>
 
