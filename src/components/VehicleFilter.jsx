@@ -6,17 +6,14 @@ import '../styles/Category.css';
 const VehicleFilters = () => {
   const [searchQuery] = useState('');
   const [filters, setFilters] = useState({
-    modelo: '',
-    categoria: '',
     marca: '',
-    nacionalidad: '',
+    modelo: '',
     año: ''
   });
   const [activeFilters, setActiveFilters] = useState(0);
 
   const filterOptions = {
     marca: ['Toyota', 'Ford', 'Chevrolet', 'Honda', 'Nissan', 'Hyundai', 'Volkswagen', 'BMW', 'Mercedes-Benz'],
-    categoria: ['Sedán', 'SUV', 'Hatchback', 'Pickup', 'Coupé', 'Convertible', 'Camioneta'],
     año: ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015']
   };
 
@@ -32,7 +29,7 @@ const VehicleFilters = () => {
   };
 
   const clearAllFilters = () => {
-    setFilters({ modelo: '', categoria: '', marca: '', nacionalidad: '', año: '' });
+    setFilters({ marca: '', modelo: '', año: '' });
     setActiveFilters(0);
   };
 
@@ -62,14 +59,14 @@ const VehicleFilters = () => {
           </div>
 
           <div className="filters-grid">
-            {['modelo', 'categoria', 'marca', 'nacionalidad', 'año'].map((key) => (
+            {['marca', 'modelo', 'año'].map((key) => (
               <div key={key} className="filter-item">
                 <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
                 <div className="input-wrapper">
                   {key === 'modelo' ? (
                     <input
                       type="text"
-                      placeholder="Ej: Corolla, Civic..."
+                      placeholder="Buscar modelo..."
                       value={filters[key]}
                       onChange={(e) => handleFilterChange(key, e.target.value)}
                     />
