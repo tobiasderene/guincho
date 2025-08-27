@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import '../styles/Header.css';
 import UserIconSimple from '../components/UserIconSimple';
@@ -7,28 +7,31 @@ import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuth();
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Búsqueda:', searchQuery);
-    // Tu lógica acá
   };
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <header className="header">
       <div className="header-content">
         {/* Logo */}
         <div className="logo">
-          <img
-            src="/guincho-logo.png"
-            alt="Guincho Logo"
-            className="logo-img"
-          />
+          <img src="/guincho-logo.png" alt="Guincho Logo" className="logo-img" />
           <span className="logo-text">Guincho Garage</span>
         </div>
 
-        {/* Navegación + botón */}
+        {/* Navegación + búsqueda + perfil */}
         <div className="nav-section">
           {/* Links izquierda */}
           <nav className="nav-left">
@@ -58,7 +61,7 @@ const Header = () => {
                 href="/perfil"
                 style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
               >
-                <UserIconName userName={user.nombre} />
+                {isMobile ? <UserIconSimple /> : <UserIconName userName={user.nombre} />}
               </a>
             ) : (
               <a
