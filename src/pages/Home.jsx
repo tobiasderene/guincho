@@ -74,7 +74,7 @@ const Home = () => {
               <div className="car-meta">
                 <span className="car-date">
                   Publicado:{' '}
-                  {new Date(pub.fecha_publicacion || Date.now()).toLocaleDateString()}
+                  {new Date(pub.fecha_publicacion).toLocaleDateString()}
                 </span>
                 <a className="read-more" href={`/post/${pub.id}`}>
                   Leer más
