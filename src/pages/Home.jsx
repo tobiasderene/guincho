@@ -88,7 +88,6 @@ const Home = () => {
       {loading && (
         <div style={{ textAlign: 'center', margin: '2rem 0' }}>
           <WheelLoader />
-          <p style={{ marginTop: '1rem', color: '#666' }}>Cargando publicaciones...</p>
         </div>
       )}
       {error && <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>}
