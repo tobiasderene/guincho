@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Login.css';
+import BackButton from '../components/BackButton';
 
 export default function CreatePost() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -140,6 +141,7 @@ export default function CreatePost() {
 
   return (
     <div className="login-container">
+      <BackButton/>
       <div className="login-logo">
         <h1>Crear Publicación</h1>
         <p>Comparte tu contenido con la comunidad</p>
