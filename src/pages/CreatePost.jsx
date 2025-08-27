@@ -68,29 +68,6 @@ export default function CreatePost() {
     setMarca('');
   };
 
-  // --- Subir imagen directo al backend ---
-  async function uploadImage(file) {
-    try {
-      const token = localStorage.getItem("access_token");
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/upload/`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData
-      });
-
-      if (!res.ok) throw new Error(`Error subiendo archivo: ${res.status}`);
-      const data = await res.json();
-      return data.public_url;
-    } catch (err) {
-      console.error("Error subiendo imagen:", err);
-      throw err;
-    }
-  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -107,14 +84,19 @@ export default function CreatePost() {
       form.append("titulo", title);
       form.append("descripcion_corta", shortDesc);
       form.append("descripcion", longDesc);
-      form.append("detalle", caracteristicas); // Nuevo campo
+      form.append("detalle", caracteristicas);
       form.append("url", link || "");
       form.append("year_vehiculo", year);
       form.append("id_categoria_vehiculo", categoria);
       form.append("id_marca_vehiculo", marca);
 
-      // Adjuntar todas las imágenes
-      selectedFiles.forEach(file => form.append("files", file));
+      // Adjuntar todas las imágenes con timestamp
+      selectedFiles.forEach(file => {
+        const now = new Date();
+        const timestamp = `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}${now.getSeconds().toString().padStart(2,'0')}`;
+        const newFile = new File([file], `${timestamp}_${file.name}`, { type: file.type });
+        form.append("files", newFile);
+      });
 
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/publicacion/`, {
         method: "POST",
@@ -137,7 +119,8 @@ export default function CreatePost() {
     } finally {
       setPublishing(false);
     }
-  };
+  };                          
+
 
   return (
     <div className="login-container">
