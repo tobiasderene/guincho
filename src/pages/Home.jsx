@@ -28,9 +28,7 @@ const Home = () => {
       // Filtrar duplicados por id, por si acaso
       setPublicaciones(prev => [
         ...prev,
-        ...data.publicaciones.filter(
-          pub => !prev.some(p => p.id === pub.id)
-        ),
+        ...data.publicaciones.filter(pub => !prev.some(p => p.id === pub.id)),
       ]);
       setTotal(data.total || 0);
     } catch (err) {
@@ -62,11 +60,14 @@ const Home = () => {
       <section className="cars-grid">
         {publicaciones.map(pub => (
           <div key={pub.id} className="car-card">
-            <img
-              className="car-image"
-              src={pub.url_portada || '/cars/default.jpg'}
-              alt={pub.titulo}
-            />
+            {/* Imagen clickeable */}
+            <a href={`/post/${pub.id}`} style={{ display: 'block' }}>
+              <img
+                className="car-image"
+                src={pub.url_portada || '/cars/default.jpg'}
+                alt={pub.titulo}
+              />
+            </a>
             <div className="car-content">
               <h2 className="car-title">{pub.titulo}</h2>
               <p className="car-description">{pub.descripcion_corta}</p>
