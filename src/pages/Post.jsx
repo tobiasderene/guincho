@@ -1,6 +1,8 @@
 import '../styles/Post.css';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import WheelLoader from '../components/WheelLoader';
+
 
 
 const Post = () => {
@@ -26,7 +28,7 @@ const Post = () => {
     fetchPost();
   }, [id]);
 
-  if (loading) return <div>Cargando publicación...</div>;
+  if (loading) return <div><WheelLoader /></div>;
   if (!post) return <div>No se encontró la publicación</div>;
 
   return (
