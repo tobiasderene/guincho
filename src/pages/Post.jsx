@@ -33,7 +33,11 @@ const Post = () => {
 
   return (
     <div className="publication-container">
-      
+      {loading && (
+        <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+          <WheelLoader />
+        </div>
+      )}
       {/* Imagen portada */}
       <div className="image-container">
             {post.url_portada ? (
